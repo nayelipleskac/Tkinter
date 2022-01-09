@@ -6,9 +6,10 @@
 
 
 import tkinter as tk
-from tkinter import Button, Entry, Label, StringVar, messagebox
+from tkinter import Button, Entry, Label, StringVar, IntVar, messagebox
+from tkinter.constants import END, LEFT, RIGHT, TOP
 root =  tk.Tk()
-root.title('Social Medias')
+root.title('Cart')
 
 # def clear():
 #     first_name_entry.delete(0, END)
@@ -115,40 +116,95 @@ root.title('Social Medias')
 # name_value = name.get()
 # name.set('nayeli')
 
-import random
+# import random
 
-def generateNum(num1, num2):
-    generate_result = StringVar()
-    generate_result = random.randint(num1, num2)
-    print('generated result - ',generate_result)
+# def generateNum(num1, num2):
+#     generate_result = StringVar()
+#     generate_result = random.randint(num1, num2)
+#     print('generated result - ', generate_result)
 
-    # generatate_result.set(generate_result)
-    result_label= Label(root, textvariable = generate_result, bg = 'yellow')
-    result_label.grid(row = 2, column = 2)
+#     # generatate_result.set(generate_result)
+#     result_label= Label(root, textvariable = generate_result)
+#     result_label.grid(row = 2, column = 2)
 
-def getLabelEntryResult():
-    label_entry_value = label_entry.get("1.0", "end")
-    # print('label entry value - ', label_entry_value)
-    # print(label_entry_value.split())
-    nums = label_entry_value.split()
-    if len(nums) > 0:
+# def getLabelEntryResult():
+#     label_entry_value = label_entry.get("1.0", "end")
+#     # print('label entry value - ', label_entry_value)
+#     # print(label_entry_value.split())
+#     nums = label_entry_value.split()
+#     if len(nums) > 0:
 
-        print(nums[0])
-        a = int(nums[0])
-        b = int(nums[1])
+#         print(nums[0])
+#         a = int(nums[0])
+#         b = int(nums[1])
 
-        # # a = int(a)
-        # # b = int(b)
-        generateNum(a,b)
+#         # # a = int(a)
+#         # # b = int(b)
+#         generateNum(a,b)
 
-label = Label(root, text= 'Give me a range: ex: start-end')
-label.grid(row = 1, column = 1)
+# label = Label(root, text= 'Give me a range: ex: start-end')
+# label.grid(row = 1, column = 1)
 
-label_entry = tk.Text(root, height = 5, width= 5)
-label_entry.grid(row = 1, column = 2)
-getLabelEntryResult()
+# label_entry = tk.Text(root, height = 5, width= 5)
+# label_entry.grid(row = 1, column = 2)
+# # getLabelEntryResult()
 
-generate_button = Button(root, text= 'Generate', command = getLabelEntryResult)
-generate_button.grid(row = 3, column = 2)
+# generate_button = Button(root, text= 'Generate', command = getLabelEntryResult)
+# generate_button.grid(row = 3, column = 2)
+
+# root.mainloop()
+
+quantity = IntVar()
+#IntVar(root, value = 5)
+
+cart = {}
+
+def decreaseInput():
+    # global quantity
+    # quantity = IntVar()
+    quantity_value = quantity.get()
+    quantity_value -= 1
+    quantity.set(quantity_value)
+    # print(quantity, quantity_value)
+
+def increaseInput():
+    quantity_value = quantity.get()
+    quantity_value += 1
+    quantity.set(quantity_value)
+
+def addToCart():
+    label_item_entry_value = label_item_entry.get()
+    cart[label_item_entry_value] = quantity.get()
+    print(cart)
+    label_item_entry.delete(0, END)
+
+def checkout():
+    m1 = messagebox.showinfo('Grocery Cart', cart)
+
+
+
+label1 = Label(root, text = 'Please enter an item')
+label1.grid(row = 1, column = 1)
+
+label_item_entry = Entry(root)
+label_item_entry.grid(row = 1, column = 2)
+
+label_quantity = Label(root, text = 'Choose the quantity    ')
+label_quantity.grid(row = 2, column = 1)
+
+decrease_button = Button(root, text = '-', fg= 'red', width = 4, command = decreaseInput)
+decrease_button.grid(row = 2, column = 1, columnspan = 3)
+
+quantity_label = Label(root, textvariable = quantity)
+quantity_label.grid(row = 2, column = 2, columnspan = 3)
+
+increase_button = Button(root, text = '+', fg= 'green', width = 4, command = increaseInput)
+increase_button.grid(row = 2, column = 3, columnspan = 3)
+
+checkout_button = Button(root, text = 'CHECKOUT', fg = 'red', width = 12, command = checkout)
+checkout_button.grid(row = 3, column = 1)
+
+add_to_cart_button = Button(root, text = 'ADD TO CART', fg = 'green', width =12, command = addToCart)
+add_to_cart_button.grid(row = 3, column = 2)
 
 root.mainloop()
