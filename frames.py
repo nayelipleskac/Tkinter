@@ -20,6 +20,8 @@ root.geometry('180x200')
 # horizontal_frame.pack()
 
 #2
+screen = pygame.display.set_mode((600,600))
+pygame.display.set_caption('Flags')
 
 def placeFrames():
     frame1 = Frame(root, width = 100, height = 50)
@@ -44,13 +46,13 @@ def placeFrames():
     # germany_flag_label = Label(frame1, image = img1).pack()
 
 def resize():
-    frame1 = Frame(root, width = 100, height = 100)
-    frame1.grid(row = 1, column = 1)
-    img1 = Image.open('germany.png')
-    resize_img = img1.resize((100,50))
-    germany_img = ImageTk.PhotoImage(resize_img)
-    germany_flag_label = Label(frame1, image = germany_img)
-    germany_flag_label.pack()
+    # frame1 = Frame(root, width = 100, height = 100)
+    # frame1.grid(row = 1, column = 1)
+    # img1 = Image.open('germany.png')
+    # resize_img = img1.resize((100,50))
+    # germany_img = ImageTk.PhotoImage(resize_img)
+    # germany_flag_label = Label(frame1, image = germany_img)
+    # germany_flag_label.pack()
 
     frame2 = Frame(root, width = 100, height = 100)
     frame2.grid(row = 1, column = 2)
@@ -62,8 +64,7 @@ def resize():
 
 white = (255,255,255)
 
-screen = pygame.display.set_mode((600,600))
-pygame.display.set_caption('Flags')
+
 # img = pygame.image.load('germany.png')
 
 while True: 
