@@ -72,8 +72,13 @@ root.title('Buttons')
 
 def submit():
     print('submit!!')
-    radio_variable.get()
-    password_length.get()
+    a = radio_variable.get()
+    b = current_val.get()
+    print('radio choice ', a, 'password length ', b)
+    if a == 0: #low
+        #random alphabets
+        pass
+        
 
 root.geometry('300x200')
 frame1 = Frame(root, width = 200, height = 50)
@@ -101,7 +106,8 @@ radio_high = Radiobutton(frame2, text = 'High', variable = radio_variable, value
 radio_high.grid(row = 4, column = 2)
 
 label4 = Label(frame3, text= 'Password Length: ').grid(row = 5, column = 1)
-password_length = Spinbox(frame3, from_ = 6, to= 12).grid(row = 5, column = 2)
+current_val = IntVar()
+password_length = Spinbox(frame3, from_ = 6, to= 12, textvariable = current_val).grid(row = 5, column = 2)
 submit_bttn = Button(frame4, text = 'Submit', command = submit, bg = 'green', fg = 'white').grid(row = 6, column = 2)
 
 
