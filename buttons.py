@@ -168,7 +168,7 @@ def login():
     if c == 1:
         print('successfully logged in!')
     if c== 0:
-        terms_bttn['fg'] = 'red'
+        terms_bttn['fg'] = 'red' #turns text red
 
 
     
