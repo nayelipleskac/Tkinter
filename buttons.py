@@ -138,7 +138,7 @@ root.title('Buttons')
 
 
 #login-app
-password = ''
+password = 'magic'
 
 def showPassword():
     global password
