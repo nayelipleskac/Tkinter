@@ -1,4 +1,6 @@
+from cgitb import text
 from gettext import find
+from select import select
 import tkinter as tk
 import pygame 
 pygame.init()
@@ -216,31 +218,69 @@ root.title('Buttons')
 # root.mainloop()
 
 #grocery price calculator
+root.geometry('300x260')
+frame1 = Frame(root, width = 300, height = 200)
+frame1.pack(fill = BOTH)
+frame2 = Frame(root, width = 300, height = 300)
+frame2.pack(fill = BOTH)
+
 items = {'milk': 10, 'chocolates': 5, 'eggs': 8, 'bread': 11, 'fruits': 2}
 item_widget_list = []
 item_var_list = []
+spinbox_dictionary = {}
 
-top_label= Label(text = 'Choose the items you want to buy')
+top_label= Label(frame1, text = 'Choose the items you want to buy')
 top_label.pack()
 
 def clear():
-    itemName.deselect()
+    for each in item_widget_list:
+        each.deselect()
 
 def next():
-    pass
+    # print('next')
+    frame1.pack_forget()
+
+    for each in item_var_list:
+        selected_items = each.get()
+        if selected_items == 1: #selected
+            print(selected_items)
+            
+        
+    for each in item_widget_list:
+        print(each)
+
+    for itemName in items:
+        labels= Label(frame2, text = itemName)
+        labels.pack()
+        current_quantity = IntVar()
+        quantity_box = Spinbox(frame2, from_ = 0, to= 15, textvariable = current_quantity)
+        quantity_box.pack()
+        spinbox_dictionary.update({itemName: current_quantity})
+        print('spinbox_dictionary: ', spinbox_dictionary)
+
+    checkout_bttn = Button(frame2, text= 'Checkout', command = checkout)
+    checkout_bttn.pack(side = 'right')
+
+def checkout():
+    for each in spinbox_dictionary:
+        price = each.spinbox_dictionary.values() * items.values()
+        messagebox.showinfo('showinfo', price)
+        
+    
+
 for itemName in items: 
     # print(itemName , items[itemName])
     item_var = IntVar()
-
-    item1 = Checkbutton(root, text= itemName, variable = item_var)
-    item1.pack()
-    item_widget_list.append(item1)
+    checkbttn = Checkbutton(frame1, text= itemName, variable = item_var)
+    checkbttn.pack()
+    item_widget_list.append(checkbttn)
     item_var_list.append(item_var)
     # print(item_widget_list)
     # print(item_var_list)
-clear_bttn = Button(root, text = 'Clear', command = clear)
+
+clear_bttn = Button(frame1, text = 'Clear', command = clear)
 clear_bttn.pack(side = 'left')
-next_bttn = Button(root, text = 'Next', command = next)
+next_bttn = Button(frame1, text = 'Next', command = next)
 next_bttn.pack(side = 'right')
 
 
