@@ -138,46 +138,39 @@ root.title('Buttons')
 
 
 #login-app
-password = 'magic'
+password_ = 'magic'
 
 def showPassword():
-    global password
     a = check_var.get()
-    password = entry2.get()
     if a == 1: #selected 
-        password = password 
+        print('here!')
+        entry2.config(show = "")
     else: 
-        for i in range(len(password)):
-            hiddenpassword = ''.join(i = '*')
-            print(i)
-        password['text'] = hiddenpassword
+        entry2.config(show = "*")
 
 def login():
-    b = remember_var.get()
-    c = terms_var.get()
-    terms_bttn= terms.get()
+    # global password_
+    remember_box = remember_var.get()
+    terms_box = terms_var.get()
+    # terms_bttn= terms.get()
     username_entry = entry1.get()
     password_entry = entry2.get()
 
-    if b == 1:
-        info = username_entry + '' + password_entry
+    if remember_box == 1:
+        info = str([username_entry, password_entry])
         f = open('userinfo.txt', 'w')
         f.write(info)
         f.close()
         print(info)
-    if c == 1:
+    if terms_box == 1:
         print('successfully logged in!')
-    if c== 0:
-        terms_bttn['fg'] = 'red' #turns text red
-
-
-    
-
+        terms['fg'] = 'green'
+    if terms_box== 0:
+        terms['fg'] = 'red'
 
 root.geometry('300x200')
 frame1 = Frame(root, width = 200, height = 50)
 frame1.pack(fill = BOTH)
-
 frame2 = Frame(root, width = 200, height = 50)
 frame2.pack(fill = BOTH)
 frame3 = Frame(root, width = 200, height = 50)
@@ -198,7 +191,7 @@ entry1.grid(row = 1, column = 2)
 
 label3 = Label(frame2, text= 'Password: ')
 label3.grid(row = 2, column = 1)
-entry2 = Entry(frame2)
+entry2 = Entry(frame2, show = "*")
 entry2.grid(row = 2, column = 2)
 
 check_var = IntVar()
