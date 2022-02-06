@@ -138,76 +138,110 @@ root.title('Buttons')
 
 
 #login-app
-password_ = 'magic'
+# password_ = 'magic'
 
-def showPassword():
-    a = check_var.get()
-    if a == 1: #selected 
-        print('here!')
-        entry2.config(show = "")
-    else: 
-        entry2.config(show = "*")
+# def showPassword():
+#     a = check_var.get()
+#     if a == 1: #selected 
+#         print('here!')
+#         entry2.config(show = "")
+#     else: 
+#         entry2.config(show = "*")
 
-def login():
-    # global password_
-    remember_box = remember_var.get()
-    terms_box = terms_var.get()
-    # terms_bttn= terms.get()
-    username_entry = entry1.get()
-    password_entry = entry2.get()
+# def login():
+#     # global password_
+#     remember_box = remember_var.get()
+#     terms_box = terms_var.get()
+#     # terms_bttn= terms.get()
+#     username_entry = entry1.get()
+#     password_entry = entry2.get()
 
-    if remember_box == 1:
-        info = str([username_entry, password_entry])
-        f = open('userinfo.txt', 'w')
-        f.write(info)
-        f.close()
-        print(info)
-    if terms_box == 1:
-        print('successfully logged in!')
-        terms['fg'] = 'green'
-    if terms_box== 0:
-        terms['fg'] = 'red'
+#     if remember_box == 1:
+#         info = str([username_entry, password_entry])
+#         f = open('userinfo.txt', 'w')
+#         f.write(info)
+#         f.close()
+#         print(info)
+#     if terms_box == 1:
+#         print('successfully logged in!')
+#         terms['fg'] = 'green'
+#     if terms_box== 0:
+#         terms['fg'] = 'red'
+#     if password_entry == password_:
+#         messagebox.showinfo('showinfo', 'Access granted')
+#     if password_entry != password_:
+#         messagebox.showinfo('showinfo', 'Access denied')
 
-root.geometry('300x200')
-frame1 = Frame(root, width = 200, height = 50)
-frame1.pack(fill = BOTH)
-frame2 = Frame(root, width = 200, height = 50)
-frame2.pack(fill = BOTH)
-frame3 = Frame(root, width = 200, height = 50)
-frame3.pack(fill = BOTH)
-frame4 = Frame(root, width = 200, height = 50)
-frame4.pack(fill = BOTH)
-frame5 = Frame(root, width = 200, height = 50)
-frame5.pack(fill = BOTH)
-frame6 = Frame(root, width = 200, height = 50)
-frame6.pack(fill = BOTH)
+# root.geometry('300x200')
+# frame1 = Frame(root, width = 200, height = 50)
+# frame1.pack(fill = BOTH)
+# frame2 = Frame(root, width = 200, height = 50)
+# frame2.pack(fill = BOTH)
+# frame3 = Frame(root, width = 200, height = 50)
+# frame3.pack(fill = BOTH)
+# frame4 = Frame(root, width = 200, height = 50)
+# frame4.pack(fill = BOTH)
+# frame5 = Frame(root, width = 200, height = 50)
+# frame5.pack(fill = BOTH)
+# frame6 = Frame(root, width = 200, height = 50)
+# frame6.pack(fill = BOTH)
 
-label1 = Label(frame1, text= 'Username: ',fg = 'black').grid(row = 1, column = 1)
-label2 = Label(frame1, fg = 'black')
-label2.grid(row = 1, column = 2)
+# label1 = Label(frame1, text= 'Username: ',fg = 'black').grid(row = 1, column = 1)
+# label2 = Label(frame1, fg = 'black')
+# label2.grid(row = 1, column = 2)
 
-entry1 = Entry(frame1)
-entry1.grid(row = 1, column = 2)
+# entry1 = Entry(frame1)
+# entry1.grid(row = 1, column = 2)
 
-label3 = Label(frame2, text= 'Password: ')
-label3.grid(row = 2, column = 1)
-entry2 = Entry(frame2, show = "*")
-entry2.grid(row = 2, column = 2)
+# label3 = Label(frame2, text= 'Password: ')
+# label3.grid(row = 2, column = 1)
+# entry2 = Entry(frame2, show = "*")
+# entry2.grid(row = 2, column = 2)
 
-check_var = IntVar()
-remember_var = IntVar()
-terms_var=  IntVar()
-check_password = Checkbutton(frame3, text= 'Show Password', variable = check_var, command = showPassword)
-check_password.grid(row = 3, column = 2)
+# check_var = IntVar()
+# remember_var = IntVar()
+# terms_var=  IntVar()
+# check_password = Checkbutton(frame3, text= 'Show Password', variable = check_var, command = showPassword)
+# check_password.grid(row = 3, column = 2)
 
-remember_password = Checkbutton(frame4, text= 'Remember Password', fg = 'blue', variable = remember_var)
-remember_password.grid(row = 4, column = 1)
+# remember_password = Checkbutton(frame4, text= 'Remember Password', fg = 'blue', variable = remember_var)
+# remember_password.grid(row = 4, column = 1)
 
-terms = Checkbutton(frame5, text= 'I accept the terms and conditions', fg = 'blue', variable = terms_var)
-terms.grid(row = 5, column = 1)
+# terms = Checkbutton(frame5, text= 'I accept the terms and conditions', fg = 'blue', variable = terms_var)
+# terms.grid(row = 5, column = 1)
 
-login_bttn = Button(frame6, text = 'Login', fg = 'black', bg = 'gray', width = 15, command = login)
-login_bttn.grid(row = 6, column = 1, )
+# login_bttn = Button(frame6, text = 'Login', fg = 'black', bg = 'gray', width = 15, command = login)
+# login_bttn.grid(row = 6, column = 1, )
+
+# root.mainloop()
+
+#grocery price calculator
+items = {'milk': 10, 'chocolates': 5, 'eggs': 8, 'bread': 11, 'fruits': 2}
+item_widget_list = []
+item_var_list = []
+
+top_label= Label(text = 'Choose the items you want to buy')
+top_label.pack()
+
+def clear():
+    itemName.deselect()
+
+def next():
+    pass
+for itemName in items: 
+    # print(itemName , items[itemName])
+    item_var = IntVar()
+
+    item1 = Checkbutton(root, text= itemName, variable = item_var)
+    item1.pack()
+    item_widget_list.append(item1)
+    item_var_list.append(item_var)
+    # print(item_widget_list)
+    # print(item_var_list)
+clear_bttn = Button(root, text = 'Clear', command = clear)
+clear_bttn.pack(side = 'left')
+next_bttn = Button(root, text = 'Next', command = next)
+next_bttn.pack(side = 'right')
+
 
 root.mainloop()
-
