@@ -217,6 +217,7 @@ root.title('Buttons')
 
 # root.mainloop()
 
+#1:1
 #grocery price calculator
 root.geometry('300x260')
 frame1 = Frame(root, width = 300, height = 200)
@@ -235,36 +236,48 @@ top_label.pack()
 def clear():
     for each in item_widget_list:
         each.deselect()
+def createFrame2(i):
+    current_quantity = IntVar()
+    item_label = Label(frame2, text = item_widget_list[i]['text'])
+    item_label.pack()
+    spinbox = Spinbox(frame2, from_ = 0, to = 20, textvariable = current_quantity)
+    spinbox.pack()
+
 
 def next():
     # print('next')
     frame1.pack_forget()
-
-    for each in item_var_list:
+    print('ivl:', item_var_list)
+    for i,each in enumerate(item_var_list): 
+        print('index: ',i, 'each', each, 'val', each.get(), 'item: ', item_widget_list[i]['text'], 'quantity:', items[item_widget_list[i]['text']])
         selected_items = each.get()
-        if selected_items == 1: #selected
-            print(selected_items)
+        print('si: ',selected_items)
+       
+        if each.get() == 1: #selected
+            createFrame2(i)
+
             
-        
     for each in item_widget_list:
         print(each)
 
-    for itemName in items:
-        labels= Label(frame2, text = itemName)
-        labels.pack()
-        current_quantity = IntVar()
-        quantity_box = Spinbox(frame2, from_ = 0, to= 15, textvariable = current_quantity)
-        quantity_box.pack()
-        spinbox_dictionary.update({itemName: current_quantity})
-        print('spinbox_dictionary: ', spinbox_dictionary)
+    # for itemName in items:
+    #     labels= Label(frame2, text = itemName)
+    #     labels.pack()
+    #     current_quantity = IntVar()
+    #     quantity_box = Spinbox(frame2, from_ = 0, to= 15, textvariable = current_quantity)
+    #     quantity_box.pack()
+    #     spinbox_dictionary.update({itemName: current_quantity})
+        # print('spinbox_dictionary: ', spinbox_dictionary)
 
-    checkout_bttn = Button(frame2, text= 'Checkout', command = checkout)
+    checkout_bttn = Button(frame2, text= 'Checkout', command = checkout(i))
     checkout_bttn.pack(side = 'right')
 
-def checkout():
-    for each in spinbox_dictionary:
-        price = each.spinbox_dictionary.values() * items.values()
-        messagebox.showinfo('showinfo', price)
+def checkout(i):
+    global 
+    quantity = items[item_widget_list[i]['text']]
+    price = 
+    total = price * quantity
+    messagebox.showinfo('showinfo', total)
         
     
 
