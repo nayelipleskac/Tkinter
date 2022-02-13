@@ -273,7 +273,7 @@ def next():
     checkout_bttn.pack(side = 'right')
 
 def checkout(i):
-    global 
+    # global 
     quantity = items[item_widget_list[i]['text']]
     price = 
     total = price * quantity
