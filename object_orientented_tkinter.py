@@ -52,12 +52,13 @@ class Question():
 for each in range(2):
     question =  Question(root, Frame(root, bg = 'white'), Label(root, text = str(answerKey()[0]), font = 'bold'), next(iter(answerKey)), IntVar(), radioButtonList1, radioButtonList1[0])
     questionObjList.append(question)
+    question.show_question(each)
 
 
 question1 = Question(root, Frame(root, bg = 'white'), Label(root, text = 'what is 5*5?', font = 'bold'), '25', IntVar(), radioButtonList1, radioButtonList1[0])
 question2 = Question(root, Frame(root, bg = 'white'), Label(root, text = 'capital of USA?', font = 'bold'), 'Washington DC', IntVar(), radioButtonList2, radioButtonList2[1])
 
-question1.show_question(0)
+
 
 button_frame = Frame(root, width = 300, height = 25)
 button_frame.pack(fill = BOTH)
