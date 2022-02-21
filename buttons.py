@@ -275,7 +275,7 @@ def next():
 def checkout(i):
     # global 
     quantity = items[item_widget_list[i]['text']]
-    price = 
+    price = 1
     total = price * quantity
     messagebox.showinfo('showinfo', total)
         
