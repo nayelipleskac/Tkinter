@@ -20,7 +20,7 @@ class Quiz:
     
 class UI:
     def __init__(self, root, questionNum, tracker):
-        self.answerKey = {'what is 5*5': '25', 'capital of USA': 'Washington DC', 'What year did Rome fall': '395 AD'}
+        self.answerKey = {'what is 5*5': '25', 'capital of USA': 'Washington DC', 'What year did Rome fall?': '395 AD'}
         self.r = root
         self.frame =  Frame(root, width = 300, height = 25)
         self.questionNum = questionNum
@@ -29,10 +29,9 @@ class UI:
         self.answer = list(self.answerKey.values())[questionNum]
         self.answer_label = Label(self.frame, text = self.answer, font = 'bold', fg = 'green')
         self.tracker = tracker
-        self.options = [Radiobutton(self.frame, text = ' 25', value= 0), Radiobutton(self.frame, text = '20', value= 1)]
-        # self.answer_index = ['25', 'Washinton', '395 AD']
+        self.options = [[Radiobutton(self.frame, text = '25', value= 0), Radiobutton(self.frame, text = '20', value= 1)], [Radiobutton(root, text = 'Washington DC', value= 0), Radiobutton(root, text = 'SF', value= 1)], [Radiobutton(root, text = '395 AD', value= 0), Radiobutton(root, text = '455 AD', value= 1)]]
         self.score = 0
-        self.score_label = Label(self.r, text = 'Score: {}'.format(self.score), font = 'bold')
+        self.score_label = Label(self.frame, text = 'Score: {}'.format(self.score), font = 'bold')
         self.button1 = Button(self.frame, text = 'Next',  width = 7, height= 1, bg = 'gray', font = 'bold', fg = 'white', command = self.next_question)
         self.button2 = Button(self.frame, text = 'Submit',  width = 7, height= 1, bg = 'gray', font = 'bold', fg = 'white', command = self.submit)
     
@@ -41,7 +40,7 @@ class UI:
         self.score_label.pack()
         self.frame.pack()
         self.question_label.pack()
-        for each in self.options:
+        for each in self.options[self.tracker]:
             each.pack()
         self.button1.pack(side = 'left')
         self.button2.pack(side = 'right')
@@ -51,13 +50,25 @@ class UI:
     def hide_question(self):
         self.frame.pack_forget()
     def next_question(self):
-        pass
+        self.hide_question()
+        if self.tracker == 3:
+            finish_label = Label(self.frame, text = 'congrats, you\'re finished.', font= 'bold')
+            finish_label.pack()
+            #how to break here 
+        self.tracker += 1
+
+        print('tracker num: ', self.tracker)
+        q= questionObjList[self.tracker]
+        q.pack_items()
+        # if self.tracker == 1:
+        #     q1 = questionObjList[0]
+        #     q1.pack_items()
 
     def submit():
         #submit button
         pass
 
-questionObjList = [UI(root, 0, IntVar()), UI(root, 1, IntVar()), UI(root, 2, IntVar())]
+questionObjList = [UI(root, 0, 0), UI(root, 1, 1), UI(root, 2, 2)]
 q1 = questionObjList[0]
 q1.pack_items()
 # q2= UI(root, 1, IntVar())
