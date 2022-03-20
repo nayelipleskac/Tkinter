@@ -37,6 +37,25 @@ def compare_answer():
         q.options[x].configure(fg = 'red')
     
     root.update()
+
+def next_question():
+    global tracker
+    q= questionObjList[tracker]
+    q.frame.pack_forget()
+    tracker += 1
+    if tracker == 3:
+        messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(score))
+        # self.hide_question()
+        finish_label = Label(root, text = 'congrats, you\'re finished. ', font= 'bold')
+        finish_label.pack()
+    else:           
+        print('tracker num: ', tracker)
+        q= questionObjList[tracker]
+        q.pack_items()
+        bttn_frame.pack()
+        button1.pack(side = 'left')
+        button2.pack(side = 'right')
+        print('button 1 and 2 pack')
    
 class UI:
     def __init__(self, root, tracker, answer1, answer2, answer_index):
@@ -57,25 +76,6 @@ class UI:
         self.question_label.pack()
         for each in self.options:
             each.pack()
-
-def next_question():
-    global tracker
-    q= questionObjList[tracker]
-    q.frame.pack_forget()
-    tracker += 1
-    if tracker == 3:
-        messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(score))
-        # self.hide_question()
-        finish_label = Label(root, text = 'congrats, you\'re finished. ', font= 'bold')
-        finish_label.pack()
-    else:           
-        print('tracker num: ', tracker)
-        q= questionObjList[tracker]
-        q.pack_items()
-        bttn_frame.pack()
-        button1.pack(side = 'left')
-        button2.pack(side = 'right')
-        print('button 1 and 2 pack')
 
 questionObjList = [UI(root, 0, '25', '20', 0), UI(root, 1,'SF', 'Washington DC', 1), UI(root, 2, '486 AD','395 AD', 1)]
 q1 = questionObjList[0]
