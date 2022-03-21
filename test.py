@@ -19,10 +19,15 @@
 # print('ciao4')
 
 
-nestedList = [['apple','mango'], ['grape', 'strawberry']]
+# nestedList = [['apple','mango'], ['grape', 'strawberry']]
 
-for each in nestedList[0]:
-    print(each)
+# for each in nestedList[0]:
+#     print(each)
+
+from tkinter import *
+
+add = IntVar() + 1
+print(add)
 
 # for each in self.options[self.tracker]:
 #             each.pack()
