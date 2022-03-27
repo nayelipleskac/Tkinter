@@ -73,7 +73,7 @@ class UI:
     def pack_items(self):
         self.sl.pack()
         self.frame.pack()
-        self.question_label.pack()
+        self.ql.pack()
         for each in self.options:
             each.pack()
         self.btn1.pack(side = 'right')
