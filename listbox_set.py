@@ -1,14 +1,14 @@
 #set 4
 from tkinter import *
 from tkinter import messagebox
-import random
-import pytz
+import pytz, random
+from datetime import datetime
 root = Tk()
 root.title('Quiz Question Game')
 
 root.geometry('300x400')
 
-#excsise 1
+# excsise 1
 # colors = ['red', 'green', 'blue', 'purple']
 
 # title = Label(root, text = 'COLORS')
@@ -58,8 +58,24 @@ scrollbar_1.config(command = listbox_1.yview)
 listbox_1.pack(side = RIGHT, fill = BOTH, expand = 1)
 scrollbar_1.pack(side = RIGHT, fill = Y)
 
-timezone_label = Label(root, text = 'timezone var', font = 'bold')
+
+def get_index():
+    selection = listbox_1.curselection()
+    for items in selection: 
+        index = str(items)
+        actual_value = listbox_1.get(index)
+        timezone = pytz.timezone(index)
+        current = datetime.now(timezone)
+        final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
+        print('index: ', index)
+        print('actual value: ', actual_value)
+        print('timezone = ', timezone)
+
+timezone_label = Label(root, text = final_time, font = 'bold')
 timezone_label.pack()
+
+button = Button(root, text = 'submit', command= get_index)
+button.pack()
 
 #append values to listbox_1
 for i in timezones:
@@ -71,8 +87,13 @@ while True:
     for items in selection: 
         index = str(items)
         actual_value = listbox_1.get(index)
+        timezone = pytz.timezone(index)
+        current = datetime.now(timezone)
+        final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
         print('index: ', index)
         print('actual value: ', actual_value)
+        print('timezone = ', timezone)
+    
 
-root.mainloop()
+    root.mainloop()
 
