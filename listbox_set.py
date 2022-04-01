@@ -62,17 +62,18 @@ scrollbar_1.pack(side = RIGHT, fill = Y)
 def get_index():
     selection = listbox_1.curselection()
     for items in selection: 
-        index = str(items)
-        actual_value = listbox_1.get(index)
-        timezone = pytz.timezone(index)
-        current = datetime.now(timezone)
-        final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
+        index = items
         print('index: ', index)
-        print('actual value: ', actual_value)
+        actual_value = str(listbox_1.get(index))
+        timezone = pytz.timezone(actual_value)
         print('timezone = ', timezone)
 
-timezone_label = Label(root, text = final_time, font = 'bold')
-timezone_label.pack()
+        current = datetime.now(timezone)
+        print('current: ', current)
+        final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
+        print('final time', final_time)
+
+
 
 button = Button(root, text = 'submit', command= get_index)
 button.pack()
@@ -85,14 +86,19 @@ for i in timezones:
 while True: 
     selection = listbox_1.curselection()
     for items in selection: 
-        index = str(items)
-        actual_value = listbox_1.get(index)
-        timezone = pytz.timezone(index)
+        index = items
+        print('index: ', index)
+        actual_value = str(listbox_1.get(index))
+        timezone = pytz.timezone(actual_value)
+        print('timezone = ', timezone)
+
         current = datetime.now(timezone)
         final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
-        print('index: ', index)
-        print('actual value: ', actual_value)
-        print('timezone = ', timezone)
+        print('final time', final_time)
+        
+
+    timezone_label = Label(root, text = 'final_time', font = 'bold')
+    timezone_label.pack()
     
 
     root.mainloop()
