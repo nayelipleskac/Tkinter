@@ -24,10 +24,17 @@
 # for each in nestedList[0]:
 #     print(each)
 
-from tkinter import *
+# from tkinter import *
 
-add = IntVar() + 1
-print(add)
+# add = IntVar() + 1
+# print(add)
 
 # for each in self.options[self.tracker]:
 #             each.pack()
+
+
+o = {'what is 5*5?': ['25', '20'], 'Capital of USA': ['San Franciso', 'Washington D.C.'], 'What year did Rome fall?': ['395 AD', '405 AD']}
+
+
+firstanswer = o['what is 5*5?'][0]
+print('first answer', firstanswer)

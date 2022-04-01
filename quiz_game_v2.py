@@ -10,6 +10,7 @@ class Quiz:
     def __init__(self):
         self.s = 0 #score
         self.qa = {'what is 5*5?': '25', 'Capital of USA:': 'Washington DC', 'What year did Rome fall?': '395 AD'}
+        self.o = {'what is 5*5?': ['25', '20'], 'Capital of USA': ['San Franciso', 'Washington D.C.'], 'What year did Rome fall?': ['395 AD', '405 AD']}
         self.q = list(self.qa.keys())
         self.a = list(self.qa.values())
         self.i= 0
@@ -29,6 +30,10 @@ class Quiz:
         self.s -=1
     def return_score(self):
         return str(self.s)
+    def return_answer1(self):
+        return self.o[self.q[self.i]][0]
+    def return_answer2(self):
+        return self.o[self.q[self.i]][1] 
 
     def debug(self):
         print('current question: ', self.q[self.i])
@@ -38,29 +43,30 @@ class Quiz:
 
 
 class UI:
-    def __init__(self, quiz, root, answer1, answer2, answer_index):
+    def __init__(self, quiz, root, answer_index):
         self.quiz = quiz 
         self.w = root #window 
-        self.frame =  Frame(self.w, width = 300, height = 25)
-        self.ql = Label(self.frame, text = self.quiz.q, font = 'bold', fg = 'black') #question label
-        self.options = [Radiobutton(self.frame, text = answer1, value= 0, variable = self.quiz.i), Radiobutton(self.frame, text = answer2, value= 1, variable = self.quiz.i)]
+        self.frame =  Frame(self.w, width = 400, height = 25)
+        self.ql = Label(self.frame, text = self.quiz.q[self.quiz.i], font = 'bold', fg = 'black', width = 500) #question label
+        self.options = [Radiobutton(self.frame, text = ''.format(self.quiz.return_answer1()), value= 0, variable = self.quiz.i), Radiobutton(self.frame, text = ''.format(self.quiz.return_answer1()), value= 1, variable = self.quiz.i)]
         self.sl = Label(root, text = 'Score: {}'.format(self.quiz.return_score()), font = 'bold') #score label
-        self.btn1 = Button(text = 'Next', width = 7, height= 1, bg = 'blue', font = 'bold', fg = 'white', command = self.next_question)
+        self.btn1 = Button(text = 'Next', width = 7, height= 1, bg = 'blue', font = 'bold', fg = 'white', command = self.next_question1)
         self.btn2 = Button(text = 'Submit', width = 7, height= 1, bg = 'blue', font = 'bold', fg = 'white', command = self.compare_answer)
         self.answer_index = answer_index
 
     def update_score(self):
         self.sl.configure(text= 'Score: {}'.format(self.quiz.return_score()))
 
-    def next_question(self):
+    def next_question1(self):
         #quiz.next_question gets return values after
         #unpack and pack
         self.frame.pack_forget()
         self.quiz.next_question()
+        self.ql.configure(text = '{}'.format(self.quiz.return_question()))
         #with incremented index, you can now display a new question
-        self.ql.configuure(text = self.quiz.return_question())
-        if self.i == 3:
-            messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(self.s))
+        
+        if self.quiz.i == 3:
+            messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(self.quiz.s))
             finish_label = Label(root, text = 'congrats, you\'re finished. ', font= 'bold')
             finish_label.pack()
         else: 
@@ -74,6 +80,7 @@ class UI:
         self.sl.pack()
         self.frame.pack()
         self.ql.pack()
+        print(self.ql)
         for each in self.options:
             each.pack()
         self.btn1.pack(side = 'right')
@@ -82,7 +89,7 @@ class UI:
 
 quiz = Quiz()
 
-app = UI(quiz, root, '20', '25', 1)
+app = UI(quiz, root, 1)
 
 print('QUIZ: ', quiz)
 print('App: ', app)
