@@ -23,6 +23,7 @@ def compare_answer():
     global score, tracker
     q= questionObjList[tracker]
     x = q.tracker.get()
+    print('user answer: ', x)
     if x == q.answer_index:
         score += 1
         #change correct answer to green

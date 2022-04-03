@@ -33,8 +33,10 @@
 #             each.pack()
 
 
-o = {'what is 5*5?': ['25', '20'], 'Capital of USA': ['San Franciso', 'Washington D.C.'], 'What year did Rome fall?': ['395 AD', '405 AD']}
+options =  [['25', '20'], ['San Franciso', 'Washington D.C.'], ['395 AD', '405 AD']]
 
 
-firstanswer = o['what is 5*5?'][0]
+firstanswer = options[0][0]
+secondanswer = options[0][1]
 print('first answer', firstanswer)
+print('second answer', secondanswer)
