@@ -10,31 +10,32 @@ class Quiz:
     def __init__(self):
         self.s = 0 #score
         self.qa = {'what is 5*5?': '25', 'Capital of USA:': 'Washington DC', 'What year did Rome fall?': '395 AD'}
-        self.o = [['25', '20'], ['San Franciso', 'Washington D.C.'], ['395 AD', '405 AD']] #options
+        self.o = [['25', '20'], ['San Francisco', 'Washington D.C.'], ['395 AD', '405 AD']] #options
         self.q = list(self.qa.keys())
         self.a = list(self.qa.values())
         self.i= 0
         self.answer_index = [0,1,0]
+
     def return_question(self):
         return self.q[self.i] #current question
     def next_question(self):
         self.i += 1 #increment list index
         print('increasing index here')
-        # answer1 = self.o[self.q[self.i]][0]
-        # answer2= self.o[self.q[self.i]][1]
-        # return answer1, answer2
+
     def return_answer(self):
         return self.q[self.i]
     def compare(self, answer):
         print('answer', answer)
         # if self.qa[self.q[self.i]] == answer:
-        #self.a[self.i] = answer_index
         if self.answer_index[self.i] == answer:
         # if self.a[self.i] == answer:
-            self.s = self.s + 1
+            self.add_score()
             print('correct answer chosen')
+            return True
         else:
+            self.subtract_score()
             print('wrong answer chosen')
+            return False
     def add_score(self):
         self.s += 1
     def subtract_score(self):
@@ -50,8 +51,8 @@ class Quiz:
         print('current index: ', self.i)
         print('current question: ', self.q[self.i])
         print('current answer: ', self.a[self.i])
-        print('current score: ', self.s)
-
+        print('current score: ', self.s, '\n')
+        
 
 
 class UI:
@@ -61,7 +62,7 @@ class UI:
         self.frame =  Frame(self.w, width = 400, height = 25)
         self.ql = Label(self.frame, text = self.quiz.q[self.quiz.i], font = 'bold', fg = 'black', width = 500) #question label
         self.tracker = IntVar()
-        self.options = [Radiobutton(self.frame, text = self.quiz.o[self.quiz.i][0], value= 0, variable = self.tracker), Radiobutton(self.frame, text = self.quiz.o[self.quiz.i][1], value= 1, variable = self.tracker)]
+        self.options = [Radiobutton(self.frame, text = self.quiz.o[self.quiz.i][0], value= 0, variable = self.tracker, fg = 'black'), Radiobutton(self.frame, text = self.quiz.o[self.quiz.i][1], value= 1, variable = self.tracker, fg = 'black')]
         self.sl = Label(root, text = 'Score: {}'.format(self.quiz.return_score()), font = 'bold') #score label
         self.btn1 = Button(text = 'Next', width = 7, height= 1, bg = 'blue', font = 'bold', fg = 'white', command = self.next_questionUI)
         self.btn2 = Button(text = 'Submit', width = 7, height= 1, bg = 'blue', font = 'bold', fg = 'white', command = self.compare_answer)
@@ -89,14 +90,17 @@ class UI:
         else: 
             app1.pack_items()
     def compare_answer(self):
-        #update score and color of answer text
-        # q = app1[self.quiz.i]
-        index = self.quiz.i 
+        print('submit bttn is pressed')
         userAnswer = self.tracker.get()
-        self.quiz.compare(userAnswer)
+        # self.quiz.compare(userAnswer)
+        if self.quiz.compare(userAnswer):
+            print('text is green')
+            self.options[self.quiz.answer_index[self.quiz.i]].configure(fg = 'green')
+        elif userAnswer != self.quiz.answer_index[self.quiz.i]:
+            print('text is red')
+            self.options[userAnswer].configure(fg = 'red')
         self.update_score()
         self.quiz.debug()
-
 
     def pack_items(self):
         self.sl.pack()

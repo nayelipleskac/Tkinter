@@ -32,7 +32,7 @@ def compare_answer():
         score_label['text'] = 'Score: {}'.format(score)
         print('correct answer chosen')
         print('score: ', score)
-    if x != q.answer_index:
+    elif x != q.answer_index:
         # change wrong answer to red
         print('wrong answer chosen')
         q.options[x].configure(fg = 'red')
