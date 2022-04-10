@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-import random
 root = Tk()
 root.title('Quiz Question Game')
 
@@ -54,7 +53,6 @@ class Quiz:
         print('current score: ', self.s, '\n')
         
 
-
 class UI:
     def __init__(self, quiz, root):
         self.quiz = quiz 
@@ -73,14 +71,25 @@ class UI:
 
     def next_questionUI(self):
         self.frame.pack_forget()
+        #change font color back to black
+        for each in self.options:
+            each.configure(fg = 'black')
         self.update_score()
         self.quiz.next_question()
-        self.ql.configure(text = '{}'.format(self.quiz.return_question()))
 
-        self.options[0].configure(text = '{}'.format(self.quiz.return_answer1()))
-        self.options[1].configure(text = '{}'.format(self.quiz.return_answer2()))
+        if self.quiz.i == 3:
+            #display message box
+            print('show message')
+            messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(self.quiz.return_score()))
+            finish_label = Label(root, text = 'congrats, you\'re finished. ', font= 'bold')
+            finish_label.pack()
+            
+        else: 
+            self.ql.configure(text = '{}'.format(self.quiz.return_question()))
+            self.options[0].configure(text = '{}'.format(self.quiz.return_answer1()))
+            self.options[1].configure(text = '{}'.format(self.quiz.return_answer2()))
 
-        self.quiz.debug()
+        # self.quiz.debug()
         #with incremented index, you can now display a new question  
         
         if self.quiz.i == 3:
@@ -92,12 +101,13 @@ class UI:
     def compare_answer(self):
         print('submit bttn is pressed')
         userAnswer = self.tracker.get()
-        # self.quiz.compare(userAnswer)
         if self.quiz.compare(userAnswer):
             print('text is green')
+            print('correct answer in green ', self.quiz.answer_index[self.quiz.i])
             self.options[self.quiz.answer_index[self.quiz.i]].configure(fg = 'green')
         elif userAnswer != self.quiz.answer_index[self.quiz.i]:
             print('text is red')
+            print('incorrect answer in red', userAnswer)
             self.options[userAnswer].configure(fg = 'red')
         self.update_score()
         self.quiz.debug()
@@ -115,8 +125,6 @@ class UI:
 quiz = Quiz()
 
 app1 = UI(quiz, root)
-# app2 = UI(quiz, root)
-# app3 = UI(quiz, root)
 
 print('QUIZ: ', quiz)
 print('App: ', app1)
@@ -124,5 +132,3 @@ app1.pack_items()
 root.mainloop()
 
 
-
-          #next_question function increments current index and returns question and answer   
