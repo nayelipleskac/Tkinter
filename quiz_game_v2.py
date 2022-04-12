@@ -1,3 +1,11 @@
+#OOP principals
+#inheritance
+# polymorphism
+# abstraction
+# encapsulation
+#bind together data and the functions that operate on them
+
+
 from tkinter import *
 from tkinter import messagebox
 root = Tk()
@@ -77,7 +85,7 @@ class UI:
         self.update_score()
         self.quiz.next_question()
 
-        if self.quiz.i == 3:
+        if self.quiz.i >= 3:
             #display message box
             print('show message')
             messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(self.quiz.return_score()))
@@ -88,16 +96,11 @@ class UI:
             self.ql.configure(text = '{}'.format(self.quiz.return_question()))
             self.options[0].configure(text = '{}'.format(self.quiz.return_answer1()))
             self.options[1].configure(text = '{}'.format(self.quiz.return_answer2()))
+            app1.pack_items()
 
         # self.quiz.debug()
         #with incremented index, you can now display a new question  
-        
-        if self.quiz.i == 3:
-            messagebox.showinfo('showinfo', 'congrats, you\'re finished! Your score was {} points'.format(self.quiz.s))
-            finish_label = Label(root, text = 'congrats, you\'re finished. ', font= 'bold')
-            finish_label.pack()
-        else: 
-            app1.pack_items()
+         
     def compare_answer(self):
         print('submit bttn is pressed')
         userAnswer = self.tracker.get()
