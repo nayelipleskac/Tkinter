@@ -46,7 +46,7 @@ root.geometry('300x400')
 
 class Timezone:
     def __init__(self):
-        self.i = index
+        # self.i = index
         self.timezones = pytz.all_timezones #all timezones
     
     def display_timezone(self):
@@ -55,7 +55,7 @@ class Timezone:
 
 class UI:
     def __init__(self):
-        self.t = timezone
+        self.t = timezoneApp
         self.title = Label(root, text = 'Choose any Timezone', fg = 'blue', font = 'bold')
         self.listbox_frame = Frame(root, width = 100, height= 200, bg = 'gray')
         self.scrollbar = Scrollbar(self.listbox_frame, orient = VERTICAL)
@@ -67,31 +67,50 @@ class UI:
         self.scrollbar.config(command = self.listbox.yview)
         self.listbox.pack(side = RIGHT, fill = BOTH, expand = 1)
         self.scrollbar.pack(side = RIGHT, fill = Y)
+        self.timezone_label.pack()
     def insert_timezones(self):
         for i in self.t.timezones:
             self.listbox.insert(END, i)
+    def get_timezone():
+        selection = app.listbox.curselection()
+        # print(selection)
+        for index in selection: 
+            # index = items
+            print('index: ', index)
+            actual_value = str(app.listbox.get(index))
+            print('actual value: ', actual_value)
+            timezone = pytz.timezone(actual_value)
+            print('timezone = ', timezone)
+            # current = datetime.now(timezone)
+            # final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
+            # print('final time', final_time)
         
-app = UI()
+
 timezoneApp = Timezone()
+app = UI()
+app.pack()
+app.insert_timezones()
+app.get_timezone()
 root.mainloop()
 
 
 
 
-timezones = pytz.all_timezones
 
-title = Label(root, text = 'Choose any Timezone', fg = 'blue', font = 'bold')
-title.pack(side = TOP)
+# timezones = pytz.all_timezones
 
-listbox_frame = Frame(root, width = 100, height= 200, bg = 'gray')
-listbox_frame.pack()
+# title = Label(root, text = 'Choose any Timezone', fg = 'blue', font = 'bold')
+# title.pack(side = TOP)
 
-scrollbar_1 = Scrollbar(listbox_frame, orient = VERTICAL)
-listbox_1 = Listbox(listbox_frame, yscrollcommand = scrollbar_1.set)
+# listbox_frame = Frame(root, width = 100, height= 200, bg = 'gray')
+# listbox_frame.pack()
 
-scrollbar_1.config(command = listbox_1.yview)
-listbox_1.pack(side = RIGHT, fill = BOTH, expand = 1)
-scrollbar_1.pack(side = RIGHT, fill = Y)
+# scrollbar_1 = Scrollbar(listbox_frame, orient = VERTICAL)
+# listbox_1 = Listbox(listbox_frame, yscrollcommand = scrollbar_1.set)
+
+# scrollbar_1.config(command = listbox_1.yview)
+# listbox_1.pack(side = RIGHT, fill = BOTH, expand = 1)
+# scrollbar_1.pack(side = RIGHT, fill = Y)
 
 
 # def get_index():
@@ -116,24 +135,5 @@ scrollbar_1.pack(side = RIGHT, fill = Y)
 # append values to listbox_1
 
 
-#get index of user selection 
-while True: 
-    selection = listbox_1.curselection()
-    for items in selection: 
-        index = items
-        print('index: ', index)
-        actual_value = str(listbox_1.get(index))
-        timezone = pytz.timezone(actual_value)
-        print('timezone = ', timezone)
 
-        current = datetime.now(timezone)
-        final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
-        print('final time', final_time)
-        
-
-    timezone_label = Label(root, text = 'final_time', font = 'bold')
-    timezone_label.pack()
-    
-
-    root.mainloop()
 
