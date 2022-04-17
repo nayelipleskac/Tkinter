@@ -61,6 +61,7 @@ class UI:
         self.scrollbar = Scrollbar(self.listbox_frame, orient = VERTICAL)
         self.listbox = Listbox(self.listbox_frame, yscrollcommand = self.scrollbar.set)
         self.timezone_label = Label(root, text = 'final_time', font = 'bold')
+        # self.bttn = Button(root, text = 'get timezone', font = 'bold', command = self.get_timezone)
     def pack(self):
         self.title.pack(side = TOP)
         self.listbox_frame.pack()
@@ -68,30 +69,44 @@ class UI:
         self.listbox.pack(side = RIGHT, fill = BOTH, expand = 1)
         self.scrollbar.pack(side = RIGHT, fill = Y)
         self.timezone_label.pack()
+        # self.bttn.pack()
     def insert_timezones(self):
         for i in self.t.timezones:
             self.listbox.insert(END, i)
-    def get_timezone():
+    def get_timezone(self):
         selection = app.listbox.curselection()
         # print(selection)
         for index in selection: 
             # index = items
-            print('index: ', index)
-            actual_value = str(app.listbox.get(index))
-            print('actual value: ', actual_value)
+            # print('index: ', index)
+            actual_value = str(self.listbox.get(index))
+            # print('actual value: ', actual_value)
             timezone = pytz.timezone(actual_value)
-            print('timezone = ', timezone)
-            # current = datetime.now(timezone)
-            # final_time = current.strftime('%d %b %Y %l:%M:%S %p %Z')
+            # print('timezone = ', timezone)
+            current = datetime.now(timezone)
+            # print('current: ', current)
+            fmt= '%A %B %d %Y   %I :%M :%S %p %Z'
+            final_time = current.strftime(fmt)
             # print('final time', final_time)
+            self.timezone_label.configure(text = final_time)
         
 
 timezoneApp = Timezone()
 app = UI()
 app.pack()
 app.insert_timezones()
-app.get_timezone()
-root.mainloop()
+
+while True:
+    app.get_timezone()
+    root.update()
+# root.mainloop()
+
+
+
+# if len(app.listbox.curselection())>0:
+#     print('in the while loop')
+#     app.get_timezone()
+#     root.mainloop()
 
 
 
