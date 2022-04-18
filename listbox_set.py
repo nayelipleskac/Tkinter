@@ -104,33 +104,49 @@ root.geometry('300x400')
 
 class Phonebook:
     def __init__(self):
-        pass
-
+        self.phonebook = {'Ralph Barnhart': 100-6843, 'Janet Jones': 686-4502, 'Chris Meyers': 755-6345}
+    def sort_keys(self):
+        # for keys in self.phonebook.keys():
+        #     return keys
+        keys = phonebook.keys()
+        return keys
 
 class UI:
     def __init__(self):
-        self.frame1 = Frame(root, width = 300, height = 50, bg = 'gray')
+        self.p = phonebook
+        self.frame1 = Frame(root, width = 300, height = 80)
         self.name_label = Label(self.frame1, text = 'Name', font = 'bold')
         self.name_entry = Entry(self.frame1, text = 'Name')
         self.phone_label = Label(self.frame1, text = 'Phone', font = 'bold')
         self.phone_entry = Entry(self.frame1, text = 'Phone')
         self.frame2 = Frame(root, width = 300, height = 50)
-        self.add_bttn = Button(self.frame2, text = 'Add')
-        self.load_bttn = Button(self.frame2, text = 'Load')
-        self.delete_bttn = Button(self.frame2, text = 'Delete')
-        self.update_bttn = Button(self.frame2, text = 'Update')
+        self.add_bttn = Button(self.frame2, text = 'Add', font = 'bold')
+        self.load_bttn = Button(self.frame2, text = 'Load', font = 'bold')
+        self.delete_bttn = Button(self.frame2, text = 'Delete', font = 'bold')
+        self.update_bttn = Button(self.frame2, text = 'Update', font = 'bold')
+        self.frame3 = Frame(root, width = 300, height = 50)
+        self.scrollbar = Scrollbar(self.frame3, orient = VERTICAL)
+        self.listbox = Listbox(self.frame3, yscrollcommand = self.scrollbar.set)
 
     def pack(self):
-        self.frame1.pack()
-        self.name_label.pack(side = 'left')
-        self.name_entry.pack()
-        self.phone_label.pack(side = 'left')
-        self.phone_entry.pack()
-        self.frame2.pack()
-        self.add_bttn.pack(expand = True)
-        self.load_bttn.pack(expand = True)
-        self.delete_bttn.pack(expand =True)
-        self.update_bttn.pack(expand = True)
+        self.frame1.grid(row = 1, column = 1)
+        self.name_label.grid(row = 1, column = 1)
+        self.name_entry.grid(row = 1, column = 2)
+        self.phone_label.grid(row = 2, column = 1)
+        self.phone_entry.grid(row = 2, column = 2)
+        self.frame2.grid(row = 3, column = 1)
+        self.add_bttn.grid(row = 3, column = 1)
+        self.load_bttn.grid(row = 3, column = 2)
+        self.delete_bttn.grid(row = 3, column = 3)
+        self.update_bttn.grid(row = 3, column = 4)
+        self.frame3.grid(row = 4, column = 1)
+        self.scrollbar.grid(row = 4, column =2)
+        self.listbox.grid(row=4, column = 1)
+    def update_listbox(self):
+        self.listbox.delete(0, END)
+        self.listbox.insert(END, self.p.sort_keys)
+
+
 
 phonebook = Phonebook()
 app = UI()
