@@ -101,15 +101,19 @@ root.geometry('300x400')
 #     root.update()
 
 #excersise 3
+#how to connect insert loop to class phonebook
 
 class Phonebook:
     def __init__(self):
-        self.phonebook = {'Ralph Barnhart': 100-6843, 'Janet Jones': 686-4502, 'Chris Meyers': 755-6345}
+        self.phonebook = {'Ralph Barnhart': 100-6843, 'Janet Jones': 686-4502, 'Chris Meyers': 755-6345, 'r Barnhart': 100-6843, 'vv Jones': 686-4502, 'v Meyers': 755-6345, 'Ralph gh': 100-6843, 'Janet e': 686-4502, 'Chris g': 755-6345, 'Ralph d': 100-6843, 'Janet d': 686-4502, 'd Meyers': 755-6345}
     def sort_keys(self):
         # for keys in self.phonebook.keys():
         #     return keys
-        keys = phonebook.keys()
-        return keys
+        #get keys
+        keys = self.phonebook.keys()
+        for k in keys:
+            print(k)
+        return k
 
 class UI:
     def __init__(self):
@@ -124,9 +128,9 @@ class UI:
         self.load_bttn = Button(self.frame2, text = 'Load', font = 'bold')
         self.delete_bttn = Button(self.frame2, text = 'Delete', font = 'bold')
         self.update_bttn = Button(self.frame2, text = 'Update', font = 'bold')
-        self.frame3 = Frame(root, width = 300, height = 50)
+        self.frame3 = Frame(root, width = 300, height = 20)
         self.scrollbar = Scrollbar(self.frame3, orient = VERTICAL)
-        self.listbox = Listbox(self.frame3, yscrollcommand = self.scrollbar.set)
+        self.listbox = Listbox(self.frame3, yscrollcommand = self.scrollbar.set, bg = 'green')
 
     def pack(self):
         self.frame1.grid(row = 1, column = 1)
@@ -144,13 +148,16 @@ class UI:
         self.listbox.grid(row=4, column = 1)
     def update_listbox(self):
         self.listbox.delete(0, END)
-        self.listbox.insert(END, self.p.sort_keys)
+        # self.p.sort_keys()
+        for name in self.p.phonebook.keys():
+            self.listbox.insert(END, name)
 
 
 
 phonebook = Phonebook()
 app = UI()
 app.pack()
+app.update_listbox()
 root.mainloop()
 
         
