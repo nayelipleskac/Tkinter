@@ -105,32 +105,32 @@ root.geometry('300x400')
 
 class Phonebook:
     def __init__(self):
-        self.phonebook = {'Ralph Barnhart': 100-6843, 'Janet Jones': 686-4502, 'Chris Meyers': 755-6345, 'r Barnhart': 100-6843, 'vv Jones': 686-4502, 'v Meyers': 755-6345, 'Ralph gh': 100-6843, 'Janet e': 686-4502, 'Chris g': 755-6345, 'Ralph d': 100-6843, 'Janet d': 686-4502, 'd Meyers': 755-6345}
+        self.phonebook = {'Ralph Barnhart': '100-6843', 'Janet Jones': '686-4502', 'Chris Meyers': '755-6345', 'r Barnhart': '100-6843', 'vv Jones': '686-4502', 'v Meyers': '755-6345', 'Ralph gh': '100-6843', 'Janet e': '686-4502', 'Chris g':'755-6345', 'Ralph d': '100-6843', 'Janet d': '686-4502', 'd Meyers': '755-6345'}
     def sort_keys(self):
-        # for keys in self.phonebook.keys():
-        #     return keys
         #get keys
         keys = self.phonebook.keys()
         for k in keys:
             print(k)
         return k
+    def printDictionary(self):
+        print('phonebook: ', self.phonebook)
 
 class UI:
     def __init__(self):
         self.p = phonebook
         self.frame1 = Frame(root, width = 300, height = 80)
         self.name_label = Label(self.frame1, text = 'Name', font = 'bold')
-        self.name_entry = Entry(self.frame1, text = 'Name')
+        self.name_entry = Entry(self.frame1, text = 'Name!')
         self.phone_label = Label(self.frame1, text = 'Phone', font = 'bold')
         self.phone_entry = Entry(self.frame1, text = 'Phone')
         self.frame2 = Frame(root, width = 300, height = 50)
-        self.add_bttn = Button(self.frame2, text = 'Add', font = 'bold')
-        self.load_bttn = Button(self.frame2, text = 'Load', font = 'bold')
-        self.delete_bttn = Button(self.frame2, text = 'Delete', font = 'bold')
-        self.update_bttn = Button(self.frame2, text = 'Update', font = 'bold')
+        self.add_bttn = Button(self.frame2, text = 'Add', font = 'bold', command = self.add)
+        self.load_bttn = Button(self.frame2, text = 'Load', font = 'bold', command = self.load)
+        self.delete_bttn = Button(self.frame2, text = 'Delete', font = 'bold', command = self.delete)
+        self.update_bttn = Button(self.frame2, text = 'Update', font = 'bold', command = self.update)
         self.frame3 = Frame(root, width = 300, height = 20)
         self.scrollbar = Scrollbar(self.frame3, orient = VERTICAL)
-        self.listbox = Listbox(self.frame3, yscrollcommand = self.scrollbar.set, bg = 'green')
+        self.listbox = Listbox(self.frame3, yscrollcommand = self.scrollbar.set)
 
     def pack(self):
         self.frame1.grid(row = 1, column = 1)
@@ -148,10 +148,46 @@ class UI:
         self.listbox.grid(row=4, column = 1)
     def update_listbox(self):
         self.listbox.delete(0, END)
-        # self.p.sort_keys()
+        #insert loop
         for name in self.p.phonebook.keys():
             self.listbox.insert(END, name)
-
+    def add(self):
+        name = self.name_entry.get()
+        phonenumber = self.phone_entry.get()
+        self.p.phonebook[name] = phonenumber
+        print(name, phonenumber)
+        self.update_listbox()
+        self.p.printDictionary()
+    def load(self):
+        #get index of chosen contact name
+        selection = self.listbox.curselection()
+        for index in selection: 
+            name = self.listbox.get(index)
+            self.name_entry.delete(0, END)
+            self.name_entry.insert(0, name)
+            phonenumber = self.p.phonebook.get(name)
+            self.phone_entry.delete(0, END)
+            self.phone_entry.insert(0, phonenumber)
+            # print('actual value of index: ', name)
+            # print('phonenumber of name: ', phonenumber)
+    def delete(self):
+        selection = self.listbox.curselection()
+        for index in selection: 
+            name = self.listbox.get(index)
+            print(name)
+            self.p.phonebook.pop(name)
+            self.p.printDictionary()
+        self.update_listbox()
+    def update(self):
+        self.load()
+        upd_name = self.name_entry.get()
+        upd_phonenumber = self.phone_entry.get()
+        print(upd_name, upd_phonenumber)
+        if len(upd_name) and len(upd_phonenumber) != 0:
+            self.p.phonebook[upd_name] = upd_phonenumber
+            self.update_listbox()
+        else:
+            messagebox.showwarning('show warning', 'pick a contact name to update') 
 
 
 phonebook = Phonebook()
