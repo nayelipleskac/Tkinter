@@ -216,11 +216,28 @@ class Login:
             password =splitLine[1]
             self.login_dictionary[username] = password 
         print(self.login_dictionary)
-    def validate(self):
-        pass
+    def validate(self, username, password):
+        print(username, password)
+        for keys in self.login_dictionary.keys():
+            print('keys', keys)
+            if username in self.login_dictionary.keys():
+                print('username found')
+                #check for password
+                if self.login_dictionary[username] == password:
+                    messagebox.showinfo("show info", 'you successfully logged in')
+                    break
+                else:
+                    messagebox.showwarning("show warning", 'incorrect password')
+                    break
+            else:
+                print('username not found')
+                messagebox.showwarning('show warning', 'username not found') 
+                break
+
 
 class UI:
     def __init__(self):
+        self.l = login
         self.notebook = ttk.Notebook(root)
         self.login_frame = Frame(self.notebook)
         self.register_frame = Frame(self.notebook)
@@ -230,7 +247,7 @@ class UI:
         self.username_entry = Entry(self.login_frame)
         self.password_label = Label(self.login_frame, text = 'Password')
         self.password_entry = Entry(self.login_frame)
-        self.submit_bttn = Button(self.login_frame, text = 'Submit')
+        self.submit_bttn = Button(self.login_frame, text = 'Submit', command = self.validate)
     def pack(self):
         self.notebook.add(self.login_frame, text = 'Login')
         self.notebook.add(self.register_frame, text = 'Register')
@@ -244,7 +261,10 @@ class UI:
         self.submit_bttn.pack()
 
     def validate(self):
-        pass
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        self.l.validate(username, password)
+
     
     
 
