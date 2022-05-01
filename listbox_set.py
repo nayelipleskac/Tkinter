@@ -205,7 +205,7 @@ root.geometry('300x400')
 
 #excersise 4
 
-class Login:
+class Backend:
     def __init__(self):
         self.login_dictionary = {}
     def getDictionary(self):
@@ -216,7 +216,7 @@ class Login:
             password =splitLine[1]
             self.login_dictionary[username] = password 
         print(self.login_dictionary)
-    def validate(self, username, password):
+    def validateLogin(self, username, password):
         print(username, password)
         for keys in self.login_dictionary.keys():
             print('keys', keys)
@@ -233,11 +233,23 @@ class Login:
                 print('username not found')
                 messagebox.showwarning('show warning', 'username not found') 
                 break
+    def register(self, username, password):
+        #append username and password to dictionary  
+        #ask how to format line 242
+        if username not in self.login_dictionary.keys():
+            self.login_dictionary[username] = password
+            file_object = open('login_app.txt', 'a')
+            file_object.write('\n' + username + '' + password + '\n')
+            file_object.close()
+            print(self.login_dictionary)
+            messagebox.showinfo("show info", 'you are successfully registered!')
+        else:
+            messagebox.showwarning('show warning', 'that username is already taken!')
 
 
-class UI:
+class LoginUI:
     def __init__(self):
-        self.l = login
+        self.b = backend
         self.notebook = ttk.Notebook(root)
         self.login_frame = Frame(self.notebook)
         self.register_frame = Frame(self.notebook)
@@ -263,14 +275,38 @@ class UI:
     def validate(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        self.l.validate(username, password)
+        self.b.validateLogin(username, password)
+ 
 
+class RegisterUI:
+    def __init__(self):
+        self.b = backend
+        self.ui = Loginapp
+        self.username_label = Label(Loginapp.register_frame, text = 'Username')
+        self.username_entry = Entry(Loginapp.register_frame)
+        self.password_label = Label(Loginapp.register_frame, text = 'Password')
+        self.password_entry = Entry(Loginapp.register_frame)
+        self.register_bttn = Button(Loginapp.register_frame, text = 'Register', command = self.register)
+    def pack(self):
+        self.username_label.pack()
+        self.username_entry.pack()
+        self.password_label.pack()
+        self.password_entry.pack()
+        self.register_bttn.pack()
     
-    
+    def register(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        self.b.register(username, password)
 
-login = Login()
-login.getDictionary()
-app = UI()
-app.pack()
+backend = Backend()
+backend.getDictionary()
+
+Loginapp = LoginUI()
+Loginapp.pack()
+
+registerApp = RegisterUI()
+registerApp.pack()
+
 root.mainloop()
 
