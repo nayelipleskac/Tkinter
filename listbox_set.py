@@ -212,8 +212,8 @@ class Backend:
         file = open('login_app.txt', 'r')
         for line in file:
             splitLine = line.split()
-            username =splitLine[0]
-            password =splitLine[1]
+            username = splitLine[0]
+            password = splitLine[1]
             self.login_dictionary[username] = password 
         print(self.login_dictionary)
     def validateLogin(self, username, password):
@@ -245,7 +245,17 @@ class Backend:
             messagebox.showinfo("show info", 'you are successfully registered!')
         else:
             messagebox.showwarning('show warning', 'that username is already taken!')
+    def reset(self, username, password):
+        if username in self.login_dictionary.keys():
+            self.login_dictionary.update({username:password})
+            #update file using the ductionary/?
+            messagebox.showinfo("show info", 'you are successfully reset!')
+            print('login dictionary:', self.login_dictionary)
+        else:
+            messagebox.showwarning('show warning', 'username not registered!')
 
+    def unsubscribe(self, username, password):
+        pass
 
 class LoginUI:
     def __init__(self):
@@ -299,6 +309,48 @@ class RegisterUI:
         password = self.password_entry.get()
         self.b.register(username, password)
 
+
+class ResetPasswordUI:
+    def __init__(self):
+        self.b = backend
+        self.ui = Loginapp
+        self.username_label = Label(Loginapp.reset_frame, text = 'Username')
+        self.username_entry = Entry(Loginapp.reset_frame)
+        self.password_label = Label(Loginapp.reset_frame, text = 'Password')
+        self.password_entry = Entry(Loginapp.reset_frame)
+        self.reset_bttn = Button(Loginapp.reset_frame, text = 'Reset', command = self.reset)
+    def pack(self):
+        self.username_label.pack()
+        self.username_entry.pack()
+        self.password_label.pack()
+        self.password_entry.pack()
+        self.reset_bttn.pack()
+    def reset(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        self.b.reset(username, password)
+
+class UnsubscribeUI:
+    def __init__(self):
+        self.b = backend
+        self.ui = Loginapp
+        self.username_label = Label(Loginapp.unsubscribe_frame, text = 'Username')
+        self.username_entry = Entry(Loginapp.unsubscribe_frame)
+        self.password_label = Label(Loginapp.unsubscribe_frame, text = 'Password')
+        self.password_entry = Entry(Loginapp.unsubscribe_frame)
+        self.reset_bttn = Button(Loginapp.unsubscribe_frame, text = 'Unsubscribe', command = self.unsubscribe)
+    def pack(self):
+        self.username_label.pack()
+        self.username_entry.pack()
+        self.password_label.pack()
+        self.password_entry.pack()
+        self.reset_bttn.pack()
+    def unsubscribe(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        self.b.unsubscribe(username, password)
+
+
 backend = Backend()
 backend.getDictionary()
 
@@ -307,6 +359,12 @@ Loginapp.pack()
 
 registerApp = RegisterUI()
 registerApp.pack()
+
+resetApp = ResetPasswordUI()
+resetApp.pack()
+
+unsubscribeApp = UnsubscribeUI()
+unsubscribeApp.pack()
 
 root.mainloop()
 
