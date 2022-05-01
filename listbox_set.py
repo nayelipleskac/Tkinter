@@ -1,4 +1,5 @@
 #set 4
+from email.mime import message
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -235,11 +236,11 @@ class Backend:
                 break
     def register(self, username, password):
         #append username and password to dictionary  
-        #ask how to format line 242
+
         if username not in self.login_dictionary.keys():
             self.login_dictionary[username] = password
             file_object = open('login_app.txt', 'a')
-            file_object.write('\n' + username + '' + password + '\n')
+            file_object.write('\n' + username + ' ' + password)
             file_object.close()
             print(self.login_dictionary)
             messagebox.showinfo("show info", 'you are successfully registered!')
@@ -248,14 +249,28 @@ class Backend:
     def reset(self, username, password):
         if username in self.login_dictionary.keys():
             self.login_dictionary.update({username:password})
-            #update file using the ductionary/?
+            print('login_dictionary:' , self.login_dictionary)
+            #update file using the dictionary
+            file_object = open('login_app.txt', 'w')
+            for key, val in self.login_dictionary.items():
+                print('key, val', key, val)
+                print(type(key), (type(val)))
+                file_object.write('{}'.format(key + ' ' + val + '\n'))
+                print("{}".format(key + ' ' + str(val)))
+
             messagebox.showinfo("show info", 'you are successfully reset!')
             print('login dictionary:', self.login_dictionary)
         else:
             messagebox.showwarning('show warning', 'username not registered!')
 
     def unsubscribe(self, username, password):
-        pass
+        self.login_dictionary.pop(username)
+        messagebox.showinfo('show info', 'you are successfully unsubscribed')
+        file_object = open('login_app.txt', 'w')
+        for key, val in self.login_dictionary.items():
+            file_object.write('{}'.format(key + ' ' + val + '\n'))
+
+
 
 class LoginUI:
     def __init__(self):
