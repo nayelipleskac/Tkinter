@@ -10,17 +10,18 @@ class Search:
     def __init__(self):
         self.a = app
     def search_info(self, user_info):
-        info = wikipedia.summary(user_info, sentences = 1)
-        self.a.textbox.insert(END, info)
+        pass
+        # info = wikipedia.summary(user_info, sentences = 1)
+        # self.a.textbox.insert(END, info)
 
 
 class UI:
     def __init__(self):
-        self.s = search
+        # self.s = search
         self.search_label = Label(root, text = 'Search')
         self.entryBox = Entry(root)
         self.submit_bttn = Button(root, text = 'Submit', command = self.submit)
-        self.textbox = Text(root)
+        self.textbox = Text(root, width = 30, height = 20)
     def grid(self):
         self.search_label.grid(row = 0, column = 0)
         self.entryBox.grid(row = 0, column = 1)
@@ -29,13 +30,14 @@ class UI:
     def submit(self):
         self.textbox.delete('1.0', END)
         user_info = self.entryBox.get()
-        self.s.search_info(user_info)
-
-    
+        info = wikipedia.summary(user_info, sentences = 1)
+        self.textbox.insert(END, info)
+        # self.s.search_info(user_info)
 
 
 app = UI()
 app.grid()
-search = Search()
+# search = Search()
+
 
 root.mainloop()
