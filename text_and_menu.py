@@ -4,14 +4,13 @@ import wikipedia
 root = Tk()
 root.title('Information from wikipedia')
 
-root.geometry('300x400')
+root.geometry('400x400')
 
 class Search:
     def __init__(self):
         self.a = app
-    def search_info(self, user_info):
-        pass
-        # info = wikipedia.summary(user_info, sentences = 1)
+    def search_info(self, user_info):   
+        info = wikipedia.summary(user_info, sentences = 1)
         # self.a.textbox.insert(END, info)
 
 
