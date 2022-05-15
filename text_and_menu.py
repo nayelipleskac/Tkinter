@@ -1,5 +1,7 @@
 #set 5  
 from tkinter import *
+from tkinter import messagebox
+
 from tkinter import filedialog as fd
 import wikipedia
 root = Tk()
@@ -40,8 +42,14 @@ root.geometry('400x400')
 
 # root.mainloop()
 
+class File():
+    def __init__(self):
+        self.file_name = None
+
+
 class UI:
     def __init__(self):
+        self.f = file
         self.menubar = Menu(root)
         self.filemenu = Menu(self.menubar, tearoff = 0)
         self.helpmenu = Menu(self.menubar, tearoff =0)
@@ -60,20 +68,39 @@ class UI:
 
 
     def new_func(self):
-        global file_name
-        file_name = None
         self.text.delete('1.0', 'end')
     def open_func(self):
-        pass
-    def save_func(self):
-        file_name = fd.asksaveasfilename()
-        file_name.write(self.text)
-        #run this and ask how to save file once 
-        #contents are written to it
+
+        self.f.file_name = fd.askopenfilename()
+        f = open(self.f.file_name, 'r')
+        
+        #file to textbox
+        with open(self.f.file_name) as f: 
+            lines = f.readlines()
+        self.text.insert('1.0', lines)
+        f.close()
+    def save_func(self):        
+        f = open(self.f.file_name, 'w')
+        text_contents = self.text.get('1.0', 'end-1c')
+        print(text_contents)
+
+        f.write(str(text_contents))
+
+        #edit file
+        if self.f.file_name != '':
+            f = open(self.f.file_name + '.txt', 'w')
+            text_contents = self.text.get('1.0', 'end-1c')
+            print(text_contents)
+
+            f.write(str(text_contents))
+        
+        
     def exit_func(self):
-        pass
+        root.destroy()
     def about_func(self):
-        pass
+        messagebox.showinfo('showinfo', 'This notepad application allowsthe user to create new files and save them, or edit existing files.')
+
+file = File()
 
 app = UI()
 app.commands()
