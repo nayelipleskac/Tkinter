@@ -45,14 +45,13 @@ root.geometry('400x400')
 class File():
     def __init__(self):
         self.file_name = None
-
-
 class UI:
     def __init__(self):
         self.f = file
         self.menubar = Menu(root)
         self.filemenu = Menu(self.menubar, tearoff = 0)
         self.helpmenu = Menu(self.menubar, tearoff =0)
+        self.options = Menu(self.menubar, tearoff = 0)
         self.text = Text(root)
     def commands(self):
         self.filemenu.add_command(label = 'New', command = self.new_func)
@@ -61,10 +60,11 @@ class UI:
         self.filemenu.add_separator()
         self.filemenu.add_command(label = 'Exit', command = self.exit_func)
         self.menubar.add_cascade(label = 'File', menu = self.filemenu)
-
         self.helpmenu.add_command(label = 'About', command = self.about_func)
         self.menubar.add_cascade(label = 'Help', menu = self.helpmenu)
         self.text.pack()
+        self.options.add_command(label = 'Configure Notepad', command = self.configure)
+        self.menubar.add_cascade(label = 'Options', menu = self.options)
 
 
     def new_func(self):
@@ -79,26 +79,31 @@ class UI:
             lines = f.readlines()
         self.text.insert('1.0', lines)
         f.close()
-    def save_func(self):        
-        f = open(self.f.file_name, 'w')
-        text_contents = self.text.get('1.0', 'end-1c')
-        print(text_contents)
-
-        f.write(str(text_contents))
-
+    def save_func(self):   
+        
         #edit file
         if self.f.file_name != '':
+            f = open(self.f.file_name, 'w')
+            text_contents = self.text.get('1.0', 'end-1c')
+            print(text_contents)
+            f.write(str(text_contents))
+        else:
+            self.f.file_name = fd.asksaveasfilename()    
             f = open(self.f.file_name + '.txt', 'w')
             text_contents = self.text.get('1.0', 'end-1c')
             print(text_contents)
 
             f.write(str(text_contents))
+
+        
         
         
     def exit_func(self):
         root.destroy()
     def about_func(self):
         messagebox.showinfo('showinfo', 'This notepad application allowsthe user to create new files and save them, or edit existing files.')
+    def configure(self):
+        self.text.configure(font= ('Times New Roman', 10, 'italic'), fg = 'red', bg = 'black')
 
 file = File()
 
@@ -107,3 +112,14 @@ app.commands()
 
 root.config(menu = app.menubar)
 root.mainloop()
+
+#Options Menu set 5
+
+# class Options:
+#     def __init__(self):
+#         self.name_label = Label('Name')
+#         self.DOB = Label('DOB')
+#         self.email = Label('Email')
+#         self.password = Label('Password')
+
+
