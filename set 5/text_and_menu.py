@@ -120,9 +120,9 @@ class Register():
         self.dayVar = StringVar()
         self.monthVar = StringVar()
         self.yearVar = StringVar()
-        self.months= ['1', '2', '3', '4', '5']
-        self.days= ['1', '2', '3', '4', '5', '6']
-        self.years = ['2001', '2002', '2003', '2004', '2005']
+        self.months= []
+        self.days= []
+        self.years = []
     def generateOptions(self):
         for days in range(1,32,1):
             self.days.append(days)
@@ -143,16 +143,18 @@ class UI:
 
         self.DOB = Label(root, text = 'DOB')
         self.monthDayYear = Label(root, text = 'Month   Day    Year')
-        self.month_dropdown = OptionMenu(root, self.r.monthVar, self.r.months)
-        self.day_dropdown = OptionMenu(root, self.r.dayVar, self.r.days)
-        self.year_dropdown = OptionMenu(root, self.r.yearVar, self.r.years)
+        self.month_dropdown = OptionMenu(root, self.r.monthVar, *self.r.months)
+        self.day_dropdown = OptionMenu(root, self.r.dayVar, *self.r.days)
+        self.year_dropdown = OptionMenu(root, self.r.yearVar, *self.r.years)
 
         self.email = Label(root, text = 'Email')
-
+        self.email_entry = Entry(root)
         self.password = Label(root, text = 'Password')
-
+        self.password_entry = Entry(root, show = '*')
         self.confirmPassword = Label(root, text = 'Confirm Password')
-        
+        self.confirmPassword_entry = Entry(root, show = '*')
+
+        self.confirm_bttn = Button(root, text = 'Create Account', width = 15, bg = 'gray', fg= 'black', command = self.createAccount)        
     def grid(self):
         self.name_label.grid(row= 0, column = 0)
         self.name_entry.grid(row = 0, column = 1)
@@ -162,13 +164,40 @@ class UI:
         self.day_dropdown.grid(row = 2, column = 2)
         self.year_dropdown.grid(row = 2, column = 3)
         self.email.grid(row = 3, column = 0)
+        self.email_entry.grid(row = 3, column = 1)
         self.password.grid(row = 4, column = 0)
+        self.password_entry.grid(row = 4, column = 1)
         self.confirmPassword.grid(row = 5, column = 0)
+        self.confirmPassword_entry.grid(row = 5, column = 1)
+        self.confirm_bttn.grid(row = 6, column = 0)
+
+    def createAccount(self):
+        print('create acct bttn clicked')
+        name = self.name_entry.get()
+        day = self.r.dayVar.get()
+        month = self.r.monthVar.get()
+        year = self.r.yearVar.get()
+        email = self.email_entry.get()
+        password = self.password_entry.get()
+        confirmPassword = self.confirmPassword_entry.get()
+        userInfo = [name + '\n', email + '\n', 'Month: ', month + '\n', 'Day: ', day + '\n', 'Year: ', year + '\n', email + '\n', 'Password: ', confirmPassword + '\n']
 
 
+        if password != confirmPassword:
+            messagebox.showwarning('show warning', 'password entries do not match') 
+
+        if len(name) ==0 or len(email) ==0 or len(password) ==0 or len(confirmPassword) == 0:
+            messagebox.showwarning('show warning', 'one or more entry fields are empty')
+        else:
+            print('password entries match')
+
+            f = open('user-info.txt', 'w')
+            with open('user-info.txt', 'w') as f:
+                f.writelines(userInfo)
+            messagebox.showinfo('showinfo', 'Success!')
 
 register =  Register()
-# register.generateOptions()
+register.generateOptions()
 app = UI()
 app.grid()
 
