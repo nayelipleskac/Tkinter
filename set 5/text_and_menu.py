@@ -9,38 +9,38 @@ root.title('Custom Notebook App')
 
 root.geometry('400x400')
 
-# class Search:
-#     def search_info(self, user_info):   
-#         info = wikipedia.summary(user_info, sentences = 1)
-#         return info
+class Search:
+    def search_info(self, user_info):   
+        info = wikipedia.summary(user_info, sentences = 1)
+        return info
 
-# class UI(Search):
-#     def __init__(self):
-#         self.s = search
-#         self.search_label = Label(root, text = 'Search')
-#         self.entryBox = Entry(root)
-#         self.submit_bttn = Button(root, text = 'Submit', command = self.submit)
-#         self.textbox = Text(root, width = 35, height = 20)
-#     def grid(self):
-#         self.search_label.grid(row = 0, column = 0)
-#         self.entryBox.grid(row = 0, column = 1)
-#         self.submit_bttn.grid(row = 0, column = 2)
-#         self.textbox.grid(row = 1, column =1)
-#     def submit(self):
-#         self.textbox.delete('1.0', END)
-#         user_info = self.entryBox.get()
-#         # info = wikipedia.summary(user_info, sentences = 1)
-#         # self.s.search_info(user_info)
+class UI(Search):
+    def __init__(self):
+        self.s = search
+        self.search_label = Label(root, text = 'Search')
+        self.entryBox = Entry(root)
+        self.submit_bttn = Button(root, text = 'Submit', command = self.submit)
+        self.textbox = Text(root, width = 35, height = 20)
+    def grid(self):
+        self.search_label.grid(row = 0, column = 0)
+        self.entryBox.grid(row = 0, column = 1)
+        self.submit_bttn.grid(row = 0, column = 2)
+        self.textbox.grid(row = 1, column =1)
+    def submit(self):
+        self.textbox.delete('1.0', END)
+        user_info = self.entryBox.get()
+        # info = wikipedia.summary(user_info, sentences = 1)
+        # self.s.search_info(user_info)
        
-#         self.textbox.insert(END, self.search_info(user_info))
+        self.textbox.insert(END, self.search_info(user_info))
 
-# search = Search()
+search = Search()
 
-# app = UI()
-# app.grid()
+app = UI()
+app.grid()
 
 
-# root.mainloop()
+root.mainloop()
 
 # class File():
 #     def __init__(self):
@@ -115,92 +115,92 @@ root.geometry('400x400')
 
 #Options Menu set 5
 
-class Register():
-    def __init__(self):
-        self.dayVar = StringVar()
-        self.monthVar = StringVar()
-        self.yearVar = StringVar()
-        self.months= []
-        self.days= []
-        self.years = []
-    def generateOptions(self):
-        for days in range(1,32,1):
-            self.days.append(days)
-        for months in range(1,13,1):
-            self.months.append(months)
-        for years in range(2000, 2023, 1):
-            self.years.append(years)
-        print('days: ', days)
-        print('months: ', months)
-        print('years: ', years)
+# class Register():
+#     def __init__(self):
+#         self.dayVar = StringVar()
+#         self.monthVar = StringVar()
+#         self.yearVar = StringVar()
+#         self.months= []
+#         self.days= []
+#         self.years = []
+#     def generateOptions(self):
+#         for days in range(1,32,1):
+#             self.days.append(days)
+#         for months in range(1,13,1):
+#             self.months.append(months)
+#         for years in range(2000, 2023, 1):
+#             self.years.append(years)
+#         print('days: ', days)
+#         print('months: ', months)
+#         print('years: ', years)
 
 
-class UI:
-    def __init__(self):
-        self.r = register
-        self.name_label = Label(root, text = 'Name')
-        self.name_entry = Entry(root)
+# class UI:
+#     def __init__(self):
+#         self.r = register
+#         self.name_label = Label(root, text = 'Name')
+#         self.name_entry = Entry(root)
 
-        self.DOB = Label(root, text = 'DOB')
-        self.monthDayYear = Label(root, text = 'Month   Day    Year')
-        self.month_dropdown = OptionMenu(root, self.r.monthVar, *self.r.months)
-        self.day_dropdown = OptionMenu(root, self.r.dayVar, *self.r.days)
-        self.year_dropdown = OptionMenu(root, self.r.yearVar, *self.r.years)
+#         self.DOB = Label(root, text = 'DOB')
+#         self.monthDayYear = Label(root, text = 'Month   Day    Year')
+#         self.month_dropdown = OptionMenu(root, self.r.monthVar, *self.r.months)
+#         self.day_dropdown = OptionMenu(root, self.r.dayVar, *self.r.days)
+#         self.year_dropdown = OptionMenu(root, self.r.yearVar, *self.r.years)
 
-        self.email = Label(root, text = 'Email')
-        self.email_entry = Entry(root)
-        self.password = Label(root, text = 'Password')
-        self.password_entry = Entry(root, show = '*')
-        self.confirmPassword = Label(root, text = 'Confirm Password')
-        self.confirmPassword_entry = Entry(root, show = '*')
+#         self.email = Label(root, text = 'Email')
+#         self.email_entry = Entry(root)
+#         self.password = Label(root, text = 'Password')
+#         self.password_entry = Entry(root, show = '*')
+#         self.confirmPassword = Label(root, text = 'Confirm Password')
+#         self.confirmPassword_entry = Entry(root, show = '*')
 
-        self.confirm_bttn = Button(root, text = 'Create Account', width = 15, bg = 'gray', fg= 'black', command = self.createAccount)        
-    def grid(self):
-        self.name_label.grid(row= 0, column = 0)
-        self.name_entry.grid(row = 0, column = 1)
-        self.DOB.grid(row = 2, column = 0)
-        self.monthDayYear.grid(row = 1, column = 1)
-        self.month_dropdown.grid(row = 2, column = 1)
-        self.day_dropdown.grid(row = 2, column = 2)
-        self.year_dropdown.grid(row = 2, column = 3)
-        self.email.grid(row = 3, column = 0)
-        self.email_entry.grid(row = 3, column = 1)
-        self.password.grid(row = 4, column = 0)
-        self.password_entry.grid(row = 4, column = 1)
-        self.confirmPassword.grid(row = 5, column = 0)
-        self.confirmPassword_entry.grid(row = 5, column = 1)
-        self.confirm_bttn.grid(row = 6, column = 0)
+#         self.confirm_bttn = Button(root, text = 'Create Account', width = 15, bg = 'gray', fg= 'black', command = self.createAccount)        
+#     def grid(self):
+#         self.name_label.grid(row= 0, column = 0)
+#         self.name_entry.grid(row = 0, column = 1)
+#         self.DOB.grid(row = 2, column = 0)
+#         self.monthDayYear.grid(row = 1, column = 1)
+#         self.month_dropdown.grid(row = 2, column = 1)
+#         self.day_dropdown.grid(row = 2, column = 2)
+#         self.year_dropdown.grid(row = 2, column = 3)
+#         self.email.grid(row = 3, column = 0)
+#         self.email_entry.grid(row = 3, column = 1)
+#         self.password.grid(row = 4, column = 0)
+#         self.password_entry.grid(row = 4, column = 1)
+#         self.confirmPassword.grid(row = 5, column = 0)
+#         self.confirmPassword_entry.grid(row = 5, column = 1)
+#         self.confirm_bttn.grid(row = 6, column = 0)
 
-    def createAccount(self):
-        print('create acct bttn clicked')
-        name = self.name_entry.get()
-        day = self.r.dayVar.get()
-        month = self.r.monthVar.get()
-        year = self.r.yearVar.get()
-        email = self.email_entry.get()
-        password = self.password_entry.get()
-        confirmPassword = self.confirmPassword_entry.get()
-        userInfo = [name + '\n', email + '\n', 'Month: ', month + '\n', 'Day: ', day + '\n', 'Year: ', year + '\n', email + '\n', 'Password: ', confirmPassword + '\n']
+#     def createAccount(self):
+#         print('create acct bttn clicked')
+#         name = self.name_entry.get()
+#         day = self.r.dayVar.get()
+#         month = self.r.monthVar.get()
+#         year = self.r.yearVar.get()
+#         email = self.email_entry.get()
+#         password = self.password_entry.get()
+#         confirmPassword = self.confirmPassword_entry.get()
+#         userInfo = [name + '\n', email + '\n', 'Month: ', month + '\n', 'Day: ', day + '\n', 'Year: ', year + '\n', email + '\n', 'Password: ', confirmPassword + '\n']
 
 
-        if password != confirmPassword:
-            messagebox.showwarning('show warning', 'password entries do not match') 
+#         if password != confirmPassword:
+#             messagebox.showwarning('show warning', 'password entries do not match') 
 
-        if len(name) ==0 or len(email) ==0 or len(password) ==0 or len(confirmPassword) == 0:
-            messagebox.showwarning('show warning', 'one or more entry fields are empty')
-        else:
-            print('password entries match')
+#         if len(name) ==0 or len(email) ==0 or len(password) ==0 or len(confirmPassword) == 0:
+#             messagebox.showwarning('show warning', 'one or more entry fields are empty')
+#         else:
+#             print('password entries match')
 
-            f = open('user-info.txt', 'w')
-            with open('user-info.txt', 'w') as f:
-                f.writelines(userInfo)
-            messagebox.showinfo('showinfo', 'Success!')
+#             f = open('user-info.txt', 'w')
+#             with open('user-info.txt', 'w') as f:
+#                 f.writelines(userInfo)
+#             messagebox.showinfo('showinfo', 'Success!')
 
-register =  Register()
-register.generateOptions()
-app = UI()
-app.grid()
+# register =  Register()
+# register.generateOptions()
+# app = UI()
+# app.grid()
 
-root.mainloop()
+# root.mainloop()
 
 
