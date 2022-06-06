@@ -7,36 +7,64 @@ from tkinter import filedialog as fd
 root = Tk()
 root.title('Calculator Project')
 
-root.geometry('400x400')
+root.geometry('200x250')
 
-
+#create a grid function for placing btns
 class Calculator(Tk):
     def __init__(self):
         Tk.__init__(self)
         
         self.numList = []
+        self.operandsList = []
 
         self.output_screen = OutputScreen(self)
         # self.output_screen.grid(row  = 0, column = 0)
+        self.keypadFrame = Frame(self)
+        self.entryFrame = Frame(self)
+        # self.historyFrame = Frame(self)
 
-        self.btn1 = One(self)
+        self.clearbtn = Clear(self.entryFrame)
+        self.clearbtn.grid(row = 0, column = 3)
+        self.entrybox = Entry(self.entryFrame)
+        self.entrybox.grid(row = 0, column =0, columnspan = 3)
+
+        self.btn1 = One(self.keypadFrame)
         self.btn1.grid(row = 0, column = 0)
-        self.btn2 = Two(self)
-        self.btn2.grid(row = 0, column = 1)
-        self.btn3 = Three(self)
-        self.btn3.grid(row = 0, column = 2)
-        self.btn4 = Four(self)
-        self.btn4.grid(row = 1, column = 0)
-        self.btn5 = Five(self)
-        self.btn5.grid(row = 1, column = 1)
-        self.btn6 = Six(self)
-        self.btn6.grid(row = 1, column = 2)
-        self.btn7 = Seven(self)
-        self.btn7.grid(row = 2, column = 0)
-        self.btn8 = Eight(self)
-        self.btn8.grid(row = 2, column = 1)
-        self.btn9 = Nine(self)
-        self.btn9.grid(row = 2, column =2)
+        # self.btn2 = Two(self.keypadFrame)
+        # self.btn2.grid(row = 0, column = 1)
+        # self.btn3 = Three(self.keypadFrame)
+        # self.btn3.grid(row = 0, column = 2)
+        # self.btn4 = Four(self.keypadFrame)
+        # self.btn4.grid(row = 1, column = 0)
+        # self.btn5 = Five(self.keypadFrame)
+        # self.btn5.grid(row = 1, column = 1)
+        # self.btn6 = Six(self.keypadFrame)
+        # self.btn6.grid(row = 1, column = 2)
+        # self.btn7 = Seven(self.keypadFrame)
+        # self.btn7.grid(row = 2, column = 0)
+        # self.btn8 = Eight(self.keypadFrame)
+        # self.btn8.grid(row = 2, column = 1)
+        # self.btn9 = Nine(self.keypadFrame)
+        # self.btn9.grid(row = 2, column =2)
+        # self.btn0 = Zero(self.keypadFrame)
+        # self.btn0.grid(row = 3, column = 1)
+
+        # self.addbtn = Add(self.keypadFrame)
+        # self.addbtn.grid(row = 0, column = 3)
+        # self.subtractbtn = Subtract(self.keypadFrame)
+        # self.subtractbtn.grid(row = 1, column = 3)
+        # self.multiplybtn = Multiply(self.keypadFrame)
+        # self.multiplybtn.grid(row = 2, column = 3)
+        # self.dividebtn = Divide(self.keypadFrame)
+        # self.dividebtn.grid(row = 3, column= 3)
+        # self.equalbtn = Equal(self.keypadFrame)
+        # self.equalbtn.grid(row = 3, column = 2)
+        # self.decimalbtn = Decimal(self.keypadFrame)
+        # self.decimalbtn.grid(row = 3, column = 0)
+
+    def grid(self):
+        pass
+
 
     def insertValue(self, target):
         self.t = None
@@ -58,10 +86,38 @@ class Calculator(Tk):
             self.numList.append(self.btn8.value())
         if target == '9':
             self.numList.append(self.btn9.value())
+        if target == '0':
+            self.numList.append(self.btn0.value())
+        
+        if target == '+':
+            self.operandsList.append(self.addbtn.value())
+        if target == '-':
+            self.operandsList.append(self.subtractbtn.value())
+        if target == '*':
+            self.operandsList.append(self.multiplybtn.value())
+        if target == '/':
+            self.operandsList.append(self.dividebtn.value())
+        if target == '=':
+            self.operandsList.append(self.equalbtn.value())
+        if target == '.': 
+            self.operandsList.append(self.decimalbtn.value())
+        if target == 'C':
+            #clear entry box
+            print('user has cleared entry box')
         self.debug()
+
+    def add(self, num1, num2):
+        pass
+    def subtract(self, num1, num2):
+        pass
+    def multiply(self, num1, num2):
+        pass
+    def divide(self, num1, num2):
+        pass
   
     def debug(self):
         print('numList: ', self.numList)
+        print('operands: ', self.operandsList)
 
 class OutputScreen(Text):
     def __init__(self, master):
@@ -70,7 +126,7 @@ class OutputScreen(Text):
 
 
 class One(Button):
-    def __init__(self, master):
+    def __init__(self, master, ):
         self.g = master #calc
         self.n = 1
         Button.__init__(self, command= lambda: self.g.insertValue('1'), height= 3, width = 5, text = self.n )
@@ -141,41 +197,82 @@ class Nine(Button):
     def value(self):
         return self.n
 
-class Ten(Button):
+class Zero(Button):
     def __init__(self, master):
         self.g = master
-        self.n = 10
-        Button.__init__(self, command = lambda: self.g.insertValue('10'), height= 3, width = 5, text = self.n)
+        self.n = 0
+        Button.__init__(self, command = lambda: self.g.insertValue('0'), height= 3, width = 5, text = self.n)
     def value(self):
         return self.n
+
+class Add(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = '+' #operand btns 
+        Button.__init__(self, command = lambda: self.g.insertValue('+'), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+
+class Subtract(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = '-' #operand btns 
+        Button.__init__(self, command = lambda: self.g.insertValue('-'), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+
+class Multiply(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = '*' #operand btns 
+        Button.__init__(self, command = lambda: self.g.insertValue('*'), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+
+class Divide(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = '/' #operand btns 
+        Button.__init__(self, command = lambda: self.g.insertValue('/'), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+    
+class Equal(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = '=' #operand btns 
+        Button.__init__(self, command = lambda: self.g.insertValue('='), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+
+class Decimal(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = '.' #operand btns 
+        Button.__init__(self, command = lambda: self.g.insertValue('.'), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+
+class Clear(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = 'C' 
+        Button.__init__(self, command = lambda: self.g.insertValue('C'), height = 3, width = 5, text = self.o)
+    def value(self):
+        return self.o
+class Entry(Entry):
+    def __init__(self, master):
+        self.g = master
+        self.o = '' 
+        Button.__init__(self, command = lambda: self.g.insertValue('Entry'), height = 3, width = 13, text = self.o)
+    def value(self):
+        return self.o
 
 if __name__ == '__main__':
     app = Calculator()
     app.mainloop()
 
 
-
-
-# class Custom_button:
-#     def __init__(self):
-        
-#         # self.button = Button(root, text = num)
-#         self.name = ['1','2','3','4','5','6','7','8','9']
-#         self.row_number = 0
-#         self.column_number = 0
-#     def draw_button(self):
-#         for name in range(0,10,1):
-#             for row in range(0, 3, 1):
-#                 for column in range(0,3,1):
-#                     # for num in range(0,10,1):
-#                     # num=row+column
-#                     print('row ', row, 'column ', column, 'num ', name)
-#                     button = Button(root, text = name, height = 3, width=5)  
-#                     button.grid(row = row, column = column)
-
-
-# buttonUI = Custom_button()
-# buttonUI.draw_button()
 
 
 
