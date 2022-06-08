@@ -7,7 +7,7 @@ from tkinter import filedialog as fd
 root = Tk()
 root.title('Calculator Project')
 
-root.geometry('200x250')
+root.geometry('500x400')
 
 #create a grid function for placing btns
 class Calculator(Tk):
@@ -17,53 +17,58 @@ class Calculator(Tk):
         self.numList = []
         self.operandsList = []
 
-        self.output_screen = OutputScreen(self)
-        # self.output_screen.grid(row  = 0, column = 0)
-        self.keypadFrame = Frame(self)
-        self.entryFrame = Frame(self)
-        # self.historyFrame = Frame(self)
-
-        self.clearbtn = Clear(self.entryFrame)
-        self.clearbtn.grid(row = 0, column = 3)
-        self.entrybox = Entry(self.entryFrame)
-        self.entrybox.grid(row = 0, column =0, columnspan = 3)
+        self.keypadFrame = Frame(self, width = 10, height = 5, bg = 'red')
+        self.entryFrame = Frame(self, height = 5, width = 10, bg = 'green')
+        self.clearbtn = Clear(self.keypadFrame)
+        self.entrybox = EntryLabel(self.entryFrame)
+        
 
         self.btn1 = One(self.keypadFrame)
-        self.btn1.grid(row = 0, column = 0)
-        # self.btn2 = Two(self.keypadFrame)
-        # self.btn2.grid(row = 0, column = 1)
-        # self.btn3 = Three(self.keypadFrame)
-        # self.btn3.grid(row = 0, column = 2)
-        # self.btn4 = Four(self.keypadFrame)
-        # self.btn4.grid(row = 1, column = 0)
-        # self.btn5 = Five(self.keypadFrame)
-        # self.btn5.grid(row = 1, column = 1)
-        # self.btn6 = Six(self.keypadFrame)
-        # self.btn6.grid(row = 1, column = 2)
-        # self.btn7 = Seven(self.keypadFrame)
-        # self.btn7.grid(row = 2, column = 0)
-        # self.btn8 = Eight(self.keypadFrame)
-        # self.btn8.grid(row = 2, column = 1)
-        # self.btn9 = Nine(self.keypadFrame)
-        # self.btn9.grid(row = 2, column =2)
-        # self.btn0 = Zero(self.keypadFrame)
-        # self.btn0.grid(row = 3, column = 1)
+        self.btn2 = Two(self.keypadFrame) 
+        self.btn3 = Three(self.keypadFrame)
+        self.btn4 = Four(self.keypadFrame)
+        self.btn5 = Five(self.keypadFrame)
+        self.btn6 = Six(self.keypadFrame)
+        self.btn7 = Seven(self.keypadFrame)
+        self.btn8 = Eight(self.keypadFrame)
+        self.btn9 = Nine(self.keypadFrame)
+        self.decimalbtn = Decimal(self.keypadFrame)
+        self.btn0 = Zero(self.keypadFrame)
+        self.equalbtn = Equal(self.keypadFrame)
 
-        # self.addbtn = Add(self.keypadFrame)
-        # self.addbtn.grid(row = 0, column = 3)
-        # self.subtractbtn = Subtract(self.keypadFrame)
-        # self.subtractbtn.grid(row = 1, column = 3)
-        # self.multiplybtn = Multiply(self.keypadFrame)
-        # self.multiplybtn.grid(row = 2, column = 3)
-        # self.dividebtn = Divide(self.keypadFrame)
-        # self.dividebtn.grid(row = 3, column= 3)
-        # self.equalbtn = Equal(self.keypadFrame)
-        # self.equalbtn.grid(row = 3, column = 2)
-        # self.decimalbtn = Decimal(self.keypadFrame)
-        # self.decimalbtn.grid(row = 3, column = 0)
+
+        self.addbtn = Add(self.keypadFrame)
+        self.subtractbtn = Subtract(self.keypadFrame)
+        self.multiplybtn = Multiply(self.keypadFrame)
+        self.dividebtn = Divide(self.keypadFrame)
 
     def grid(self):
-        pass
+        self.entryFrame.grid(row = 0, column = 0)
+        self.keypadFrame.grid(row = 1, column = 0)
+        self.clearbtn.grid(row = 1, column = 2)
+        self.entrybox.grid(row = 0, column =1)
+
+        self.btn1.grid(row = 2, column = 0)
+        self.btn2.grid(row = 2, column = 1)
+        self.btn3.grid(row = 2, column = 2)
+
+        self.btn4.grid(row = 3, column = 0)
+        self.btn5.grid(row = 3, column = 1)
+        self.btn6.grid(row = 3, column = 2)
+
+        self.btn7.grid(row = 4, column = 0)
+        self.btn8.grid(row = 4, column = 1)
+        self.btn9.grid(row = 4, column = 2)
+
+        self.decimalbtn.grid(row = 5, column = 0)
+        self.btn0.grid(row = 5, column = 1)
+        self.equalbtn.grid(row = 5, column = 2)
+
+        self.addbtn.grid(row = 2, column = 3)
+        self.subtractbtn.grid(row = 3, column = 3)
+        self.multiplybtn.grid(row = 4, column = 3)
+        self.dividebtn.grid(row = 5, column= 3)
+
 
 
     def insertValue(self, target):
@@ -74,7 +79,7 @@ class Calculator(Tk):
             self.numList.append(self.btn2.value())
         if target == '3':
             self.numList.append(self.btn3.value())
-        if target == '4':
+        if target == '4':   
             self.numList.append(self.btn4.value())
         if target == '5':
             self.numList.append(self.btn5.value())
@@ -119,10 +124,7 @@ class Calculator(Tk):
         print('numList: ', self.numList)
         print('operands: ', self.operandsList)
 
-class OutputScreen(Text):
-    def __init__(self, master):
-        self.g = master
-        Text.__init__(self, height = 3, width = 25)
+
 
 
 class One(Button):
@@ -260,16 +262,17 @@ class Clear(Button):
         Button.__init__(self, command = lambda: self.g.insertValue('C'), height = 3, width = 5, text = self.o)
     def value(self):
         return self.o
-class Entry(Entry):
+class EntryLabel(Entry):
     def __init__(self, master):
         self.g = master
         self.o = '' 
-        Button.__init__(self, command = lambda: self.g.insertValue('Entry'), height = 3, width = 13, text = self.o)
+        Entry.__init__(self, text = self.o, font = ('Arial', 18))
     def value(self):
         return self.o
 
 if __name__ == '__main__':
     app = Calculator()
+    app.grid()
     app.mainloop()
 
 
