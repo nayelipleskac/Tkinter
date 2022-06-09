@@ -9,21 +9,23 @@ root.title('Calculator Project')
 
 root.geometry('500x400')
 
-#create a grid function for placing btns
+#listbox w/ historybtn
+#do the photo backspace 
+
 class Calculator(Tk):
     def __init__(self):
         Tk.__init__(self)
         
         self.numList = []
         self.operandsList = []
+        self.history = []
 
         self.keypadFrame = Frame(self, width = 10, height = 5, bg = 'red')
         self.entryFrame = Frame(self, height = 5, width = 10, bg = 'green')
         self.clearbtn = Clear(self)
         self.entrybox = EntryLabel(self)
+        self.deletebtn = Delete(self)
         self.historybtn = History(self)
-        # self.deletebtn = Delete(self.entryFrame)
-        
 
         self.btn1 = One(self)
         self.btn2 = Two(self) 
@@ -50,7 +52,7 @@ class Calculator(Tk):
         self.entrybox.grid(row = 0, column =1)
 
         self.historybtn.grid(row = 1, column = 0)
-        # self.deletebtn.grid(row = 1, column = 1)
+        self.deletebtn.grid(row = 1, column = 1)
         self.clearbtn.grid(row = 1, column = 2)
 
         self.btn1.grid(row = 2, column = 0)
@@ -79,88 +81,140 @@ class Calculator(Tk):
     def insertValue(self, target):
         self.t = None
         if target == '1':
-            self.numList.append(self.btn1.value())
+            self.numList.append(str(self.btn1.value()))
             self.entrybox.delete(0, END)
             for nums in self.numList:
                 self.entrybox.insert(END, nums)
         if target == '2':
-            self.numList.append(self.btn2.value())
+            self.numList.append(str(self.btn2.value()))
             self.entrybox.delete(0, END)
             for nums in self.numList:
                 self.entrybox.insert(END, nums)
-            # self.entrybox.insert(self.numList.index('2'), self.btn2.n)
         if target == '3':
-            self.numList.append(self.btn3.value())
+            self.numList.append(str(self.btn3.value()))
             self.entrybox.insert(0,self.btn3.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '4':   
-            self.numList.append(self.btn4.value())
+            self.numList.append(str(self.btn4.value()))
             self.entrybox.insert(0,self.btn4.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '5':
-            self.numList.append(self.btn5.value())
+            self.numList.append(str(self.btn5.value()))
             self.entrybox.insert(0,self.btn5.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '6':
-            self.numList.append(self.btn6.value())
+            self.numList.append(str(self.btn6.value()))
             self.entrybox.insert(0,self.btn6.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '7':
-            self.numList.append(self.btn7.value())
+            self.numList.append(str(self.btn7.value()))
             self.entrybox.insert(0, self.btn7.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '8':
-            self.numList.append(self.btn8.value())
+            self.numList.append(str(self.btn8.value()))
             self.entrybox.insert(0,self.btn8.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '9':
-            self.numList.append(self.btn9.value())
+            self.numList.append(str(self.btn9.value()))
             self.entrybox.insert(0,self.btn9.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '0':
-            self.numList.append(self.btn0.value())
+            self.numList.append(str(self.btn0.value()))
             self.entrybox.insert(0,self.btn0.n)
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         
         if target == '+':
             self.operandsList.append(self.addbtn.value())
-            self.entrybox.insert(0,self.addbtn.o)
+            self.numList.append(self.addbtn.value())
+            self.entrybox.delete(0,END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
+            
 
         if target == '-':
             self.operandsList.append(self.subtractbtn.value())
-            self.entrybox.insert(0,self.subtractbtn.o)
+            self.numList.append(self.subtractbtn.value())
+            self.entrybox.delete(0,END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '*':
             self.operandsList.append(self.multiplybtn.value())
-            self.entrybox.insert(0,self.multiplybtn.o)
+            self.numList.append(self.multiplybtn.value())
+            self.entrybox.delete(0,END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '/':
             self.operandsList.append(self.dividebtn.value())
-            self.entrybox.insert(0,self.dividebtn.o)
+            self.numList.append(self.dividebtn.value())
+            self.entrybox.delete(0,END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == '=':
             self.operandsList.append(self.equalbtn.value())
-            self.entrybox.insert(0,self.equalbtn.o)
+            # self.numList.append(self.equalbtn.value())
+            #calculate results
+            # operand_index = self.numList(self.operandsList)
+            
+            expression = ''.join(self.numList)
+            eval_expression = eval(expression)
+            print(eval_expression)
+            self.entrybox.delete(0,END)
+            self.entrybox.insert(0, eval_expression)
+
+            self.history.append(expression)
 
         if target == '.': 
             self.operandsList.append(self.decimalbtn.value())
-            self.entrybox.insert(0,self.decimalbtn.o)
+            self.numList.append(self.decimalbtn.value())
+            self.entrybox.delete(0,END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
 
         if target == 'C':
             #clear entry box
+            self.entrybox.delete(0, END)
+            self.numList.clear()
             print('user has cleared entry box')
         if target == 'History':
             print('history btn clicked')
+            for each in self.history:
+                self.entrybox.insert(0,each)
+
+
+        if target == 'Delete':
+            self.numList.pop()
+            self.entrybox.delete(0,END)
+            self.entrybox.insert(0, self.numList)
+            #delete the last digit of number in entry box
         self.debug()
 
-    def add(self, num1, num2):
-        pass
-    def subtract(self, num1, num2):
-        pass
-    def multiply(self, num1, num2):
-        pass
-    def divide(self, num1, num2):
-        pass
   
     def debug(self):
         print('numList: ', self.numList)
@@ -313,15 +367,15 @@ class History(Button):
     def value(self):
         return self.o #num value list equations
 
-#get path to image working 
-# class Delete(Button):
-#     def __init__(self, master):
-#         self.g = master
-#         self.img_png = PhotoImage(file = 'backspace image.webp') 
-#         self.o = ''
-#         Button.__init__(self, command = lambda: self.g.insertValue('Delete'), height = 2, width = 5, image = self.img_png)
-#     def value(self):
-#         return self.o
+class Delete(Button):
+    def __init__(self, master):
+        self.g = master
+        # self.img_png = PhotoImage(file = 'backspace image.webp') 
+        self.img_png = 'delete!'
+        self.o = 'Delete'
+        Button.__init__(self, command = lambda: self.g.insertValue('Delete'), height = 2, width = 5, text = self.img_png)
+    def value(self):
+        return self.o
 
 
 
