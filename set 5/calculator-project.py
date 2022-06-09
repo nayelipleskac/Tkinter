@@ -80,38 +80,72 @@ class Calculator(Tk):
         self.t = None
         if target == '1':
             self.numList.append(self.btn1.value())
-            self.entrybox.insert('1')
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
         if target == '2':
             self.numList.append(self.btn2.value())
+            self.entrybox.delete(0, END)
+            for nums in self.numList:
+                self.entrybox.insert(END, nums)
+            # self.entrybox.insert(self.numList.index('2'), self.btn2.n)
         if target == '3':
             self.numList.append(self.btn3.value())
+            self.entrybox.insert(0,self.btn3.n)
+
         if target == '4':   
             self.numList.append(self.btn4.value())
+            self.entrybox.insert(0,self.btn4.n)
+
         if target == '5':
             self.numList.append(self.btn5.value())
+            self.entrybox.insert(0,self.btn5.n)
+
         if target == '6':
             self.numList.append(self.btn6.value())
+            self.entrybox.insert(0,self.btn6.n)
+
         if target == '7':
             self.numList.append(self.btn7.value())
+            self.entrybox.insert(0, self.btn7.n)
+
         if target == '8':
             self.numList.append(self.btn8.value())
+            self.entrybox.insert(0,self.btn8.n)
+
         if target == '9':
             self.numList.append(self.btn9.value())
+            self.entrybox.insert(0,self.btn9.n)
+
         if target == '0':
             self.numList.append(self.btn0.value())
+            self.entrybox.insert(0,self.btn0.n)
+
         
         if target == '+':
             self.operandsList.append(self.addbtn.value())
+            self.entrybox.insert(0,self.addbtn.o)
+
         if target == '-':
             self.operandsList.append(self.subtractbtn.value())
+            self.entrybox.insert(0,self.subtractbtn.o)
+
         if target == '*':
             self.operandsList.append(self.multiplybtn.value())
+            self.entrybox.insert(0,self.multiplybtn.o)
+
         if target == '/':
             self.operandsList.append(self.dividebtn.value())
+            self.entrybox.insert(0,self.dividebtn.o)
+
         if target == '=':
             self.operandsList.append(self.equalbtn.value())
+            self.entrybox.insert(0,self.equalbtn.o)
+
         if target == '.': 
             self.operandsList.append(self.decimalbtn.value())
+            self.entrybox.insert(0,self.decimalbtn.o)
+
         if target == 'C':
             #clear entry box
             print('user has cleared entry box')
