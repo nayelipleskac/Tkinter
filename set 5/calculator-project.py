@@ -19,34 +19,39 @@ class Calculator(Tk):
 
         self.keypadFrame = Frame(self, width = 10, height = 5, bg = 'red')
         self.entryFrame = Frame(self, height = 5, width = 10, bg = 'green')
-        self.clearbtn = Clear(self.keypadFrame)
-        self.entrybox = EntryLabel(self.entryFrame)
+        self.clearbtn = Clear(self)
+        self.entrybox = EntryLabel(self)
+        self.historybtn = History(self)
+        # self.deletebtn = Delete(self.entryFrame)
         
 
-        self.btn1 = One(self.keypadFrame)
-        self.btn2 = Two(self.keypadFrame) 
-        self.btn3 = Three(self.keypadFrame)
-        self.btn4 = Four(self.keypadFrame)
-        self.btn5 = Five(self.keypadFrame)
-        self.btn6 = Six(self.keypadFrame)
-        self.btn7 = Seven(self.keypadFrame)
-        self.btn8 = Eight(self.keypadFrame)
-        self.btn9 = Nine(self.keypadFrame)
-        self.decimalbtn = Decimal(self.keypadFrame)
-        self.btn0 = Zero(self.keypadFrame)
-        self.equalbtn = Equal(self.keypadFrame)
+        self.btn1 = One(self)
+        self.btn2 = Two(self) 
+        self.btn3 = Three(self)
+        self.btn4 = Four(self)
+        self.btn5 = Five(self)
+        self.btn6 = Six(self)
+        self.btn7 = Seven(self)
+        self.btn8 = Eight(self)
+        self.btn9 = Nine(self)
+        self.decimalbtn = Decimal(self)
+        self.btn0 = Zero(self)
+        self.equalbtn = Equal(self)
 
 
-        self.addbtn = Add(self.keypadFrame)
-        self.subtractbtn = Subtract(self.keypadFrame)
-        self.multiplybtn = Multiply(self.keypadFrame)
-        self.dividebtn = Divide(self.keypadFrame)
+        self.addbtn = Add(self)
+        self.subtractbtn = Subtract(self)
+        self.multiplybtn = Multiply(self)
+        self.dividebtn = Divide(self)
 
     def grid(self):
         self.entryFrame.grid(row = 0, column = 0)
         self.keypadFrame.grid(row = 1, column = 0)
-        self.clearbtn.grid(row = 1, column = 2)
         self.entrybox.grid(row = 0, column =1)
+
+        self.historybtn.grid(row = 1, column = 0)
+        # self.deletebtn.grid(row = 1, column = 1)
+        self.clearbtn.grid(row = 1, column = 2)
 
         self.btn1.grid(row = 2, column = 0)
         self.btn2.grid(row = 2, column = 1)
@@ -75,6 +80,7 @@ class Calculator(Tk):
         self.t = None
         if target == '1':
             self.numList.append(self.btn1.value())
+            self.entrybox.insert('1')
         if target == '2':
             self.numList.append(self.btn2.value())
         if target == '3':
@@ -109,6 +115,8 @@ class Calculator(Tk):
         if target == 'C':
             #clear entry box
             print('user has cleared entry box')
+        if target == 'History':
+            print('history btn clicked')
         self.debug()
 
     def add(self, num1, num2):
@@ -128,7 +136,7 @@ class Calculator(Tk):
 
 
 class One(Button):
-    def __init__(self, master, ):
+    def __init__(self, master):
         self.g = master #calc
         self.n = 1
         Button.__init__(self, command= lambda: self.g.insertValue('1'), height= 3, width = 5, text = self.n )
@@ -259,13 +267,34 @@ class Clear(Button):
     def __init__(self, master):
         self.g = master
         self.o = 'C' 
-        Button.__init__(self, command = lambda: self.g.insertValue('C'), height = 3, width = 5, text = self.o)
+        Button.__init__(self, command = lambda: self.g.insertValue('C'), height = 2, width = 5, text = self.o)
     def value(self):
         return self.o
+
+class History(Button):
+    def __init__(self, master):
+        self.g = master
+        self.o = 'History' 
+        Button.__init__(self, command = lambda: self.g.insertValue('History'), height = 2, width = 15, text = self.o)
+    def value(self):
+        return self.o #num value list equations
+
+#get path to image working 
+# class Delete(Button):
+#     def __init__(self, master):
+#         self.g = master
+#         self.img_png = PhotoImage(file = 'backspace image.webp') 
+#         self.o = ''
+#         Button.__init__(self, command = lambda: self.g.insertValue('Delete'), height = 2, width = 5, image = self.img_png)
+#     def value(self):
+#         return self.o
+
+
+
 class EntryLabel(Entry):
     def __init__(self, master):
         self.g = master
-        self.o = '' 
+        self.o = ''
         Entry.__init__(self, text = self.o, font = ('Arial', 18))
     def value(self):
         return self.o
