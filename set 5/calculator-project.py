@@ -22,6 +22,7 @@ class Calculator(Tk):
 
         self.keypadFrame = Frame(self, width = 10, height = 5, bg = 'red')
         self.entryFrame = Frame(self, height = 5, width = 10, bg = 'green')
+        self.listboxFrame = Frame(self, width = 200, height = 150, bg= 'purple')
         self.clearbtn = Clear(self)
         self.entrybox = EntryLabel(self)
         self.deletebtn = Delete(self)
@@ -40,11 +41,18 @@ class Calculator(Tk):
         self.btn0 = Zero(self)
         self.equalbtn = Equal(self)
 
-
         self.addbtn = Add(self)
         self.subtractbtn = Subtract(self)
         self.multiplybtn = Multiply(self)
         self.dividebtn = Divide(self)
+
+        self.scrollbar= Scrollbar(self.listboxFrame, orient = VERTICAL)
+        self.listbox = Listbox(self.listboxFrame, yscrollcommand = self.scrollbar.set)
+
+
+        # self.listbox_frame = Frame(root, width = 100, height= 200, bg = 'gray')
+        # self.scrollbar = Scrollbar(self.listbox_frame, orient = VERTICAL)
+        # self.listbox = Listbox(self.listbox_frame, yscrollcommand = self.scrollbar.set)
 
     def grid(self):
         self.entryFrame.grid(row = 0, column = 0)
@@ -76,6 +84,10 @@ class Calculator(Tk):
         self.multiplybtn.grid(row = 4, column = 3)
         self.dividebtn.grid(row = 5, column= 3)
 
+        self.listboxFrame.grid(row= 6, column = 0)
+        self.listbox.pack(side = RIGHT, fill = BOTH, expand = 1)
+        self.scrollbar.config(command = self.listbox.yview)
+        self.scrollbar.pack(side = RIGHT, fill = Y)
 
 
     def insertValue(self, target):
@@ -202,10 +214,12 @@ class Calculator(Tk):
             self.entrybox.delete(0, END)
             self.numList.clear()
             print('user has cleared entry box')
+
         if target == 'History':
             print('history btn clicked')
             for each in self.history:
-                self.entrybox.insert(0,each)
+                self.listbox.insert(0,each)
+                print('hisory ', each)
 
 
         if target == 'Delete':
@@ -377,8 +391,6 @@ class Delete(Button):
     def value(self):
         return self.o
 
-
-
 class EntryLabel(Entry):
     def __init__(self, master):
         self.g = master
@@ -386,6 +398,24 @@ class EntryLabel(Entry):
         Entry.__init__(self, text = self.o, font = ('Arial', 18))
     def value(self):
         return self.o
+
+class ListboxFrame(Listbox):
+    def __init__(self, master):
+        self.g = master
+        self.o = ''
+        Listbox.__init__(self, font = ('Arial', 12))
+    def value(self):
+        return self.o
+
+
+class ScrollBarFrame(Scrollbar):
+    def __init__(self, master):
+        self.g = master
+        self.o = ''
+        Scrollbar.__init__(self, orient = VERTICAL)
+    def value(self):
+        return self.o
+
 
 if __name__ == '__main__':
     app = Calculator()
