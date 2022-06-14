@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 from tkinter import filedialog as fd
+from PIL import Image, ImageTk
 
 root = Tk()
 root.title('Calculator Project')
@@ -25,7 +26,7 @@ class Calculator(Tk):
         self.listboxFrame = Frame(self, width = 200, height = 150, bg= 'purple')
         self.clearbtn = Clear(self)
         self.entrybox = EntryLabel(self)
-        self.deletebtn = Delete(self)
+        # self.deletebtn = Delete(self)
         self.historybtn = History(self)
 
         self.btn1 = One(self)
@@ -60,7 +61,7 @@ class Calculator(Tk):
         self.entrybox.grid(row = 0, column =1)
 
         self.historybtn.grid(row = 1, column = 0)
-        self.deletebtn.grid(row = 1, column = 1)
+        # self.deletebtn.grid(row = 1, column = 1)
         self.clearbtn.grid(row = 1, column = 2)
 
         self.btn1.grid(row = 2, column = 0)
@@ -384,10 +385,24 @@ class History(Button):
 class Delete(Button):
     def __init__(self, master):
         self.g = master
-        # self.img_png = PhotoImage(file = 'backspace image.webp') 
-        self.img_png = 'delete!'
+        img = Image.open(r'C:/Users/plesk/Downloads/delete.png') 
+        resize_img = img.resize((50,50))
+        resize_img = resize_img.save('C:/Users/plesk/Downloads/delete1.png')
+        delete_img = ImageTk.PhotoImage(file = 'C:/Users/plesk/Downloads/delete1.png')
+
+        img_label = Label(self, image = delete_img)
+        img_label.grid(row = 1, column = 1)
+        
+            # img1 = Image.open('germany.png')
+            # resize_img = img1.resize((100,50))
+            # germany_img = ImageTk.PhotoImage(resize_img)
+            # germany_flag_label = Label(frame1, image = germany_img)
+            # germany_flag_label.pack()
+
+
+        # self.img_png = 'delete!'
         self.o = 'Delete'
-        Button.__init__(self, command = lambda: self.g.insertValue('Delete'), height = 2, width = 5, text = self.img_png)
+        Button.__init__(self, image = delete_img, command = lambda: self.g.insertValue('Delete'))
     def value(self):
         return self.o
 
