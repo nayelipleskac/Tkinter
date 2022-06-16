@@ -10,9 +10,6 @@ root.title('Calculator Project')
 
 root.geometry('600x550')
 
-#listbox w/ historybtn
-#do the photo backspace 
-
 class Calculator(Tk):
     def __init__(self):
         Tk.__init__(self)
@@ -22,13 +19,12 @@ class Calculator(Tk):
         self.history = []
         self.flag = 0
 
-
         self.keypadFrame = Frame(self, width = 10, height = 5, bg = 'red')
         self.entryFrame = Frame(self, height = 5, width = 10, bg = 'green')
         self.listboxFrame = Frame(self, width = 200, height = 150, bg= 'purple')
         self.clearbtn = Clear(self)
         self.entrybox = EntryLabel(self)
-        # self.deletebtn = Delete(self)
+        self.deletebtn = Delete(self)
         self.historybtn = History(self)
 
         self.btn1 = One(self)
@@ -49,14 +45,8 @@ class Calculator(Tk):
         self.multiplybtn = Multiply(self)
         self.dividebtn = Divide(self)
 
-        # self.scrollbar= Scrollbar(self, orient = VERTICAL)
         self.listbox = ListboxFrame(self)
         self.scrollbar = ScrollBarFrame(self)
-
-
-        # self.listbox_frame = Frame(root, width = 100, height= 200, bg = 'gray')
-        # self.scrollbar = Scrollbar(self.listbox_frame, orient = VERTICAL)
-        # self.listbox = Listbox(self.listbox_frame, yscrollcommand = self.scrollbar.set)
 
     def grid(self):
         self.entryFrame.grid(row = 0, column = 0)
@@ -64,7 +54,7 @@ class Calculator(Tk):
         self.entrybox.grid(row = 0, column =1)
 
         self.historybtn.grid(row = 1, column = 0)
-        # self.deletebtn.grid(row = 1, column = 1)
+        self.deletebtn.grid(row = 1, column = 1)
         self.clearbtn.grid(row = 1, column = 2)
 
         self.btn1.grid(row = 2, column = 0)
@@ -87,13 +77,6 @@ class Calculator(Tk):
         self.subtractbtn.grid(row = 3, column = 3)
         self.multiplybtn.grid(row = 4, column = 3)
         self.dividebtn.grid(row = 5, column= 3)
-
-        # self.listboxFrame.grid(row= 6, column = 0)
-
-        
-
-        # self.listbox.pack(side = RIGHT, fill = BOTH, expand = 1)
-        # self.scrollbar.pack(side = RIGHT, fill = Y)
 
 
     def insertValue(self, target):
@@ -164,7 +147,6 @@ class Calculator(Tk):
             for nums in self.numList:
                 self.entrybox.insert(END, nums)
 
-        
         if target == '+':
             self.operandsList.append(self.addbtn.value())
             self.numList.append(self.addbtn.value())
@@ -172,7 +154,6 @@ class Calculator(Tk):
             for nums in self.numList:
                 self.entrybox.insert(END, nums)
             
-
         if target == '-':
             self.operandsList.append(self.subtractbtn.value())
             self.numList.append(self.subtractbtn.value())
@@ -196,9 +177,6 @@ class Calculator(Tk):
 
         if target == '=':
             self.operandsList.append(self.equalbtn.value())
-            # self.numList.append(self.equalbtn.value())
-            #calculate results
-            # operand_index = self.numList(self.operandsList)
             
             expression = ''.join(self.numList)
             eval_expression = eval(expression)
@@ -236,7 +214,6 @@ class Calculator(Tk):
                 self.scrollbar.config(command = self.listbox.yview)
                 self.listbox.grid(row = 6, column = 0, rowspan = 5)
 
-
         if target == 'Delete':
             self.numList.pop()
             self.entrybox.delete(0,END)
@@ -248,9 +225,6 @@ class Calculator(Tk):
     def debug(self):
         print('numList: ', self.numList)
         print('operands: ', self.operandsList)
-
-
-
 
 class One(Button):
     def __init__(self, master):
@@ -399,24 +373,11 @@ class History(Button):
 class Delete(Button):
     def __init__(self, master):
         self.g = master
-        img = Image.open(r'C:/Users/plesk/Downloads/delete.png') 
-        resize_img = img.resize((50,50))
-        resize_img = resize_img.save('C:/Users/plesk/Downloads/delete1.png')
-        delete_img = ImageTk.PhotoImage(file = 'C:/Users/plesk/Downloads/delete1.png')
-
-        img_label = Label(self, image = delete_img)
-        img_label.grid(row = 1, column = 1)
-        
-            # img1 = Image.open('germany.png')
-            # resize_img = img1.resize((100,50))
-            # germany_img = ImageTk.PhotoImage(resize_img)
-            # germany_flag_label = Label(frame1, image = germany_img)
-            # germany_flag_label.pack()
-
-
-        # self.img_png = 'delete!'
+        self.img = Image.open(r'C:/Users/plesk/Downloads/delete.png') 
+        self.resize_img = self.img.resize((20,20))
+        self.delete_img = ImageTk.PhotoImage(self.resize_img)
         self.o = 'Delete'
-        Button.__init__(self, image = delete_img, command = lambda: self.g.insertValue('Delete'))
+        Button.__init__(self, image = self.delete_img, command = lambda: self.g.insertValue('Delete'))
     def value(self):
         return self.o
 
@@ -444,9 +405,6 @@ class ListboxFrame(Listbox):
         Listbox.__init__(self, yscrollcommand = self.scrollbar.set, font = ('Arial', 12))
     def value(self):
         return self.o
-
-
-
 
 if __name__ == '__main__':
     app = Calculator()
