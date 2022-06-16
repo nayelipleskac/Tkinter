@@ -8,7 +8,7 @@ from PIL import Image, ImageTk
 root = Tk()
 root.title('Calculator Project')
 
-root.geometry('500x400')
+root.geometry('600x550')
 
 #listbox w/ historybtn
 #do the photo backspace 
@@ -20,6 +20,8 @@ class Calculator(Tk):
         self.numList = []
         self.operandsList = []
         self.history = []
+        self.flag = 0
+
 
         self.keypadFrame = Frame(self, width = 10, height = 5, bg = 'red')
         self.entryFrame = Frame(self, height = 5, width = 10, bg = 'green')
@@ -47,8 +49,9 @@ class Calculator(Tk):
         self.multiplybtn = Multiply(self)
         self.dividebtn = Divide(self)
 
-        self.scrollbar= Scrollbar(self.listboxFrame, orient = VERTICAL)
-        self.listbox = Listbox(self.listboxFrame, yscrollcommand = self.scrollbar.set)
+        # self.scrollbar= Scrollbar(self, orient = VERTICAL)
+        self.listbox = ListboxFrame(self)
+        self.scrollbar = ScrollBarFrame(self)
 
 
         # self.listbox_frame = Frame(root, width = 100, height= 200, bg = 'gray')
@@ -85,10 +88,12 @@ class Calculator(Tk):
         self.multiplybtn.grid(row = 4, column = 3)
         self.dividebtn.grid(row = 5, column= 3)
 
-        self.listboxFrame.grid(row= 6, column = 0)
-        self.listbox.pack(side = RIGHT, fill = BOTH, expand = 1)
-        self.scrollbar.config(command = self.listbox.yview)
-        self.scrollbar.pack(side = RIGHT, fill = Y)
+        # self.listboxFrame.grid(row= 6, column = 0)
+
+        
+
+        # self.listbox.pack(side = RIGHT, fill = BOTH, expand = 1)
+        # self.scrollbar.pack(side = RIGHT, fill = Y)
 
 
     def insertValue(self, target):
@@ -217,10 +222,19 @@ class Calculator(Tk):
             print('user has cleared entry box')
 
         if target == 'History':
-            print('history btn clicked')
-            for each in self.history:
-                self.listbox.insert(0,each)
-                print('hisory ', each)
+            self.flag+=1
+            print('SELF.FLAG = ', self.flag)
+            if  (self.flag %2) == 0:
+                print('flag is even')
+                self.listbox.grid_remove()
+            else: 
+                print('flag is odd')
+                self.listbox.delete(0, END)
+                for each in self.history:
+                    self.listbox.insert(0,each)
+                    print('hisory ', each)
+                self.scrollbar.config(command = self.listbox.yview)
+                self.listbox.grid(row = 6, column = 0, rowspan = 5)
 
 
         if target == 'Delete':
@@ -414,22 +428,24 @@ class EntryLabel(Entry):
     def value(self):
         return self.o
 
-class ListboxFrame(Listbox):
-    def __init__(self, master):
-        self.g = master
-        self.o = ''
-        Listbox.__init__(self, font = ('Arial', 12))
-    def value(self):
-        return self.o
-
-
 class ScrollBarFrame(Scrollbar):
     def __init__(self, master):
         self.g = master
-        self.o = ''
+        self.o = 'Scrollbar'
         Scrollbar.__init__(self, orient = VERTICAL)
     def value(self):
         return self.o
+
+class ListboxFrame(Listbox):
+    def __init__(self, master):
+        self.g = master
+        self.o = 'Listbox'
+        self.scrollbar = ScrollBarFrame(self)
+        Listbox.__init__(self, yscrollcommand = self.scrollbar.set, font = ('Arial', 12))
+    def value(self):
+        return self.o
+
+
 
 
 if __name__ == '__main__':
