@@ -15,7 +15,7 @@ class Calculator(Tk):
         Tk.__init__(self)
         
         self.numList = []
-        self.operandsList = []
+        self.operandsList = []   
         self.history = []
         self.flag = 0
 
