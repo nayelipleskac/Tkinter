@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 from tkinter import filedialog as fd
 from PIL import Image, ImageTk
+import random
 
 root = Tk()
 root.title('Memory Tile Project')
@@ -16,6 +17,7 @@ class MemoryTile(Tk):
         self.numList = []
         self.imgList = []
         #use dictionary instead of tuple
+        self.imgDict = {}
         # self.imgTuple = ()
         self.img1 = Img1(self)
         self.img1Copy = Img1(self)
@@ -35,22 +37,48 @@ class MemoryTile(Tk):
         self.img8Copy = Img8(self)
     
     def grid(self):
-        self.img1.grid(row = 0, column = 0)
-        self.img1Copy.grid(row = 0, column = 2)
-        self.img2.grid(row = 0, column = 1)
-        self.img2Copy.grid(row = 0, column = 3)
-        self.img3.grid(row = 1, column = 0)
-        self.img3Copy.grid(row = 1, column = 1)
-        self.img4.grid(row = 1, column = 2)
-        self.img4Copy.grid(row = 1, column = 3)
-        self.img5.grid(row= 2, column =0)
-        self.img5Copy.grid(row = 2, column = 1)
-        self.img6.grid(row = 2, column = 2)
-        self.img6Copy.grid(row = 2,column = 3)
-        self.img7.grid(row = 3, column = 0)
-        self.img7Copy.grid(row = 3, column = 1)
-        self.img8.grid(row= 3,column = 2)
-        self.img8Copy.grid(row = 3, column = 3)
+        # append self.imgn in self.imgList; shuffle list; 
+        self.imgList.append(self.img1)
+        self.imgList.append(self.img2)
+        self.imgList.append(self.img3)
+        self.imgList.append(self.img4)
+        self.imgList.append(self.img5)
+        self.imgList.append(self.img6)
+        self.imgList.append(self.img7)
+        self.imgList.append(self.img8)
+        self.imgList.append(self.img1Copy)
+        self.imgList.append(self.img2Copy)
+        self.imgList.append(self.img3Copy)
+        self.imgList.append(self.img4Copy)
+        self.imgList.append(self.img5Copy)
+        self.imgList.append(self.img6Copy)
+        self.imgList.append(self.img7Copy)
+        self.imgList.append(self.img8Copy)
+
+        #xx
+        random.shuffle(self.imgList)
+
+        for row in range(0,4,1):
+            for column in range(0,4,1):
+                self.imgList[row*4+column].grid(row = row, column = column)
+
+        
+        # self.img1.grid(row = 0, column = 0)
+        # self.img1Copy.grid(row = 0, column = 2)
+        # self.img2.grid(row = 0, column = 1)
+        # self.img2Copy.grid(row = 0, column = 3)
+        # self.img3.grid(row = 1, column = 0)
+        # self.img3Copy.grid(row = 1, column = 1)
+        # self.img4.grid(row = 1, column = 2)
+        # self.img4Copy.grid(row = 1, column = 3)
+        # self.img5.grid(row= 2, column =0)
+        # self.img5Copy.grid(row = 2, column = 1)
+        # self.img6.grid(row = 2, column = 2)
+        # self.img6Copy.grid(row = 2,column = 3)
+        # self.img7.grid(row = 3, column = 0)
+        # self.img7Copy.grid(row = 3, column = 1)
+        # self.img8.grid(row= 3,column = 2)
+        # self.img8Copy.grid(row = 3, column = 3)
 
         #img 8, copy imgs x2
     def insertValue(self, target):
@@ -73,10 +101,16 @@ class MemoryTile(Tk):
             print('img8 was pressed')
         self.debug()
     def matchImg(self):
-        #use the hash mehtod 
-        for i in range(1,9,1):
-            self.numList.append(i)
-            self.numList.append(i)
+        #use the hash method 
+        # {1: Img1, 2: Img2, 3: Img3, 4: Img4}
+        for x in range(1, 3, 1):
+            for i in range(1,9,1):
+                self.numList.append(i)
+                # self.imgDict[i] = 
+#match ids to imgs; if the two ids match, the imgs are the same
+
+
+
 
 
     def debug(self):
@@ -100,8 +134,8 @@ class Img1(Button):
         Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img1'))
     def value(self):
         return self.n
-    def appendImgTuple(self):
-        self.g.imgTuple.append(self.final_pokemon_img)
+    def appendImgList(self):
+        self.g.imgList.append(self.final_pokemon_img)
 
 class Img2(Button):
     def __init__(self, master):
