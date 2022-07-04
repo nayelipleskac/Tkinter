@@ -18,6 +18,7 @@ class MemoryTile(Tk):
         self.imgList = []
         self.targetList = []
         #use dictionary instead of tuple
+        #coment
         # self.imgTuple = ()
         self.img1 = Img1(self)
         self.img1Copy = Img1(self)
