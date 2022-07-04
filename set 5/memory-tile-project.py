@@ -16,8 +16,8 @@ class MemoryTile(Tk):
         Tk.__init__(self)
         self.numList = []
         self.imgList = []
+        self.targetList = []
         #use dictionary instead of tuple
-        self.imgDict = {}
         # self.imgTuple = ()
         self.img1 = Img1(self)
         self.img1Copy = Img1(self)
@@ -35,7 +35,8 @@ class MemoryTile(Tk):
         self.img7Copy = Img7(self)
         self.img8 = Img8(self)
         self.img8Copy = Img8(self)
-    
+        self.imgDict = {1: self.img1, 2: self.img2, 3: self.img3, 4: self.img4, 5: self.img5, 6: self.img6, 7: self.img7, 8: self.img8, 9: self.img1, 10: self.img2, 11: self.img3, 12: self.img4, 13: self.img5, 14: self.img6, 15: self.img7, 16: self.img8}
+        self.objTargetList = list(self.imgDict.values())    
     def grid(self):
         # append self.imgn in self.imgList; shuffle list; 
         self.imgList.append(self.img1)
@@ -55,67 +56,93 @@ class MemoryTile(Tk):
         self.imgList.append(self.img7Copy)
         self.imgList.append(self.img8Copy)
 
-        #xx
+        for x in range(0,2,1):
+            for y in range(0,8,1):
+                self.numList.append(y)
+
+        random.shuffle(self.numList)
+        #mapping the list
+        # for index, value in enumerate(self.numList):
+        #     self.imgDict[index] = value
+
         random.shuffle(self.imgList)
+
+        for key, val in enumerate(self.imgList):
+            self.imgDict[key] = val
+        #result: {0: img3, 1: img4, ...}
+        # for x in self.imgList:
+        #     self.imgDict[x] = img
 
         for row in range(0,4,1):
             for column in range(0,4,1):
                 self.imgList[row*4+column].grid(row = row, column = column)
+                # self.imgDict[
 
-        
-        # self.img1.grid(row = 0, column = 0)
-        # self.img1Copy.grid(row = 0, column = 2)
-        # self.img2.grid(row = 0, column = 1)
-        # self.img2Copy.grid(row = 0, column = 3)
-        # self.img3.grid(row = 1, column = 0)
-        # self.img3Copy.grid(row = 1, column = 1)
-        # self.img4.grid(row = 1, column = 2)
-        # self.img4Copy.grid(row = 1, column = 3)
-        # self.img5.grid(row= 2, column =0)
-        # self.img5Copy.grid(row = 2, column = 1)
-        # self.img6.grid(row = 2, column = 2)
-        # self.img6Copy.grid(row = 2,column = 3)
-        # self.img7.grid(row = 3, column = 0)
-        # self.img7Copy.grid(row = 3, column = 1)
-        # self.img8.grid(row= 3,column = 2)
-        # self.img8Copy.grid(row = 3, column = 3)
-
-        #img 8, copy imgs x2
-    def insertValue(self, target):
+    def insertValue(self, target, pokemon_img, questionmark):
         self.t = None
+        print(target)
+        self.dictList = list(self.imgDict.keys())
+        print('list of dict keys', self.dictList)
+        self.targetList.append(target)
+        if len(self.targetList) == 2:
+
+            if self.targetList[0] == self.targetList[1]:
+                print('MATCH')
+                #change img type to pokemon img
+                # self.targetList[0].config(image = pokemon_img)
+            else: 
+                print('NOT A MATCH')
+                print('targetlist[0]', self.targetList[0])
+                print('targetList[1]', self.targetList[1])
+                #change img type to question mark
+                #comparing class objects instead of strings 
+                # self.targetList[0].config(image = questionmark)
+                # self.targetList[1].config(image = questionmark)
+
+            self.targetList.clear()
+        
+
         if target == 'Img1':
-            print('img1 was pressed')
+            print('img1 was pressed')  
+            #change img type to pokemon img 
+            self.img1.config(image = pokemon_img)
         if target == 'Img2':
             print('img2 was pressed')
+            self.img2.config(image = pokemon_img)
+
         if target == 'Img3':
             print('img3 was pressed')
+            self.img3.config(image = pokemon_img)
         if target == 'Img4':
             print('img4 was pressed')
+            self.img4.config(image = pokemon_img)
         if target == 'Img5':
             print('img5 was pressed')
+            self.img5.config(image = pokemon_img)
         if target == 'Img6':
             print('img6 was pressed')
+            self.img6.config(image = pokemon_img)
         if target == 'Img7':
             print('img7 was pressed')
+            self.img7.config(image = pokemon_img)
         if target == 'Img8':
             print('img8 was pressed')
+            self.img8.config(image = pokemon_img)
+        if target == self.imgList[0]:
+            print('img')
         self.debug()
     def matchImg(self):
+        pass
         #use the hash method 
         # {1: Img1, 2: Img2, 3: Img3, 4: Img4}
-        for x in range(1, 3, 1):
-            for i in range(1,9,1):
-                self.numList.append(i)
-                # self.imgDict[i] = 
+        # for x in range(1, 3, 1):
+        #     for i in range(1,9,1):
+        #         self.numList.append(i)
 #match ids to imgs; if the two ids match, the imgs are the same
-
-
-
-
 
     def debug(self):
         print('self.numList ', self.numList)
-
+        # index = self.imgList.index()
 
 class Img1(Button):
     def __init__(self, master):
@@ -131,7 +158,8 @@ class Img1(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img1'))
+        
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img1', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
     def appendImgList(self):
@@ -151,7 +179,7 @@ class Img2(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img2'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img2', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img3(Button):
@@ -168,7 +196,7 @@ class Img3(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img3'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img3', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img4(Button):
@@ -185,7 +213,7 @@ class Img4(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img4'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img4', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img5(Button):
@@ -202,7 +230,7 @@ class Img5(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img5'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img5', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img6(Button):
@@ -219,7 +247,7 @@ class Img6(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img6'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img6', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img7(Button):
@@ -236,7 +264,7 @@ class Img7(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img7'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img7', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img8(Button):
@@ -253,7 +281,7 @@ class Img8(Button):
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_pokemon_img, command = lambda: self.g.insertValue('Img8'))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img8',self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 
