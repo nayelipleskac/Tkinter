@@ -36,7 +36,7 @@ class MemoryTile(Tk):
         self.img7Copy = Img7(self)
         self.img8 = Img8(self)
         self.img8Copy = Img8(self)
-        self.imgDict = {1: self.img1, 2: self.img2, 3: self.img3, 4: self.img4, 5: self.img5, 6: self.img6, 7: self.img7, 8: self.img8, 9: self.img1, 10: self.img2, 11: self.img3, 12: self.img4, 13: self.img5, 14: self.img6, 15: self.img7, 16: self.img8}
+        self.imgDict = {1: self.img1, 2: self.img2, 3: self.img3, 4: self.img4, 5: self.img5, 6: self.img6, 7: self.img7, 8: self.img8, 9: self.img1Copy, 10: self.img2Copy, 11: self.img3Copy, 12: self.img4Copy, 13: self.img5Copy, 14: self.img6Copy, 15: self.img7Copy, 16: self.img8Copy}
         self.objTargetList = list(self.imgDict.values())    
     def grid(self):
         # append self.imgn in self.imgList; shuffle list; 
@@ -79,59 +79,65 @@ class MemoryTile(Tk):
                 self.imgList[row*4+column].grid(row = row, column = column)
                 # self.imgDict[
 
-    def insertValue(self, target, pokemon_img, questionmark):
+    def insertValue(self, target, val, pokemon_img, questionmark):
         self.t = None
-        print(target)
-        self.dictList = list(self.imgDict.keys())
-        print('list of dict keys', self.dictList)
+        # print(target)
+        # self.dictList = list(self.imgDict.keys())
+        # print('list of dict keys', self.dictList)
+        # self.imgDict[key] = 
         self.targetList.append(target)
+        
         if len(self.targetList) == 2:
-
-            if self.targetList[0] == self.targetList[1]:
+            target1 = self.targetList[0]
+            target2 = self.targetList[1]
+            print('imgDict[target1].value()', self.imgDict[target1].value())
+            print('imgDict[target2].value()', self.imgDict[target2].value())
+            if self.imgDict[target1].value() == self.imgDict[target2].value():
+        #     if self.targetList[0] == self.targetList[1]:
                 print('MATCH')
-                #change img type to pokemon img
-                # self.targetList[0].config(image = pokemon_img)
+                self.debug()
+                self.targetList.clear()
+            #change img type to pokemon img
+            # self.targetList[0].config(image = pokemon_img)
             else: 
                 print('NOT A MATCH')
                 print('targetlist[0]', self.targetList[0])
                 print('targetList[1]', self.targetList[1])
-                #change img type to question mark
-                #comparing class objects instead of strings 
-                # self.targetList[0].config(image = questionmark)
-                # self.targetList[1].config(image = questionmark)
-
-            self.targetList.clear()
+                self.debug()
+                self.targetList.clear()
+            #change img type to question mark
+            #comparing class objects instead of strings 
+            # self.targetList[0].config(image = questionmark)
+            # self.targetList[1].config(image = questionmark)
         
-
-        if target == 'Img1':
+        if val == 'Img1':
             print('img1 was pressed')  
             #change img type to pokemon img 
             self.img1.config(image = pokemon_img)
-        if target == 'Img2':
+        if val == 'Img2':
             print('img2 was pressed')
             self.img2.config(image = pokemon_img)
 
-        if target == 'Img3':
+        if val == 'Img3':
             print('img3 was pressed')
-            self.img3.config(image = pokemon_img)
-        if target == 'Img4':
+            self.imgDict[target].value().config(image = pokemon_img)
+        if val == 'Img4':
             print('img4 was pressed')
             self.img4.config(image = pokemon_img)
-        if target == 'Img5':
+        if val == 'Img5':
             print('img5 was pressed')
             self.img5.config(image = pokemon_img)
-        if target == 'Img6':
+        if val == 'Img6':
             print('img6 was pressed')
             self.img6.config(image = pokemon_img)
-        if target == 'Img7':
+        if val == 'Img7':
             print('img7 was pressed')
             self.img7.config(image = pokemon_img)
-        if target == 'Img8':
+        if val == 'Img8':
             print('img8 was pressed')
             self.img8.config(image = pokemon_img)
-        if target == self.imgList[0]:
+        if val == self.imgList[0]:
             print('img')
-        self.debug()
     def matchImg(self):
         pass
         #use the hash method 
@@ -143,6 +149,7 @@ class MemoryTile(Tk):
 
     def debug(self):
         print('self.numList ', self.numList)
+        print('targetList: ', self.targetList)
         # index = self.imgList.index()
 
 class Img1(Button):
@@ -154,17 +161,15 @@ class Img1(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img1'
+        self.n = 'bulbasaur'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
         
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img1', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(1,'Img1', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
-    def appendImgList(self):
-        self.g.imgList.append(self.final_pokemon_img)
 
 class Img2(Button):
     def __init__(self, master):
@@ -175,12 +180,12 @@ class Img2(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img2'
+        self.n = 'eevee'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img2', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(2,'Img2', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img3(Button):
@@ -192,12 +197,12 @@ class Img3(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img3'
+        self.n = 'rayquaza'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img3', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(3,'Img3', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img4(Button):
@@ -209,12 +214,12 @@ class Img4(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img4'
+        self.n = 'snorlax'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img4', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(4,'Img4', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img5(Button):
@@ -226,12 +231,12 @@ class Img5(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img5'
+        self.n = 'pikachu'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img5', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(5,'Img5', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img6(Button):
@@ -243,12 +248,12 @@ class Img6(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img6'
+        self.n = 'gyarados'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img6', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(6,'Img6', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img7(Button):
@@ -260,12 +265,12 @@ class Img7(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img7'
+        self.n = 'torchic'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img7', self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(7,'Img7', self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 class Img8(Button):
@@ -277,12 +282,12 @@ class Img8(Button):
         self.resize_pokemon_img = self.pokemon_img.resize((100,100))
         self.final_question_img = ImageTk.PhotoImage(self.resize_question_img)
         self.final_pokemon_img = ImageTk.PhotoImage(self.resize_pokemon_img)
-        self.n = 'Img8'
+        self.n = 'vaporeon'
         self.button_state = 'NORMAL'
         self.row_val = 0
         self.column_val = 0
         self.is_clicked = 0
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue('Img8',self.final_pokemon_img, self.final_question_img))
+        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.insertValue(8,'Img8',self.final_pokemon_img, self.final_question_img))
     def value(self):
         return self.n
 
