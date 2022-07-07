@@ -38,6 +38,8 @@ class MemoryTile(Tk):
         self.img8Copy = Img8(self)
         self.imgDict = {1: self.img1, 2: self.img2, 3: self.img3, 4: self.img4, 5: self.img5, 6: self.img6, 7: self.img7, 8: self.img8, 9: self.img1Copy, 10: self.img2Copy, 11: self.img3Copy, 12: self.img4Copy, 13: self.img5Copy, 14: self.img6Copy, 15: self.img7Copy, 16: self.img8Copy}
         self.objTargetList = list(self.imgDict.values())    
+        self.dictList = list(self.imgDict.keys())
+
     def grid(self):
         # append self.imgn in self.imgList; shuffle list; 
         self.imgList.append(self.img1)
@@ -81,8 +83,8 @@ class MemoryTile(Tk):
 
     def insertValue(self, target, val, pokemon_img, questionmark):
         self.t = None
+        pressed_img=self.imgDict[target]
         # print(target)
-        # self.dictList = list(self.imgDict.keys())
         # print('list of dict keys', self.dictList)
         # self.imgDict[key] = 
         self.targetList.append(target)
@@ -90,12 +92,12 @@ class MemoryTile(Tk):
         if len(self.targetList) == 2:
             target1 = self.targetList[0]
             target2 = self.targetList[1]
-            print('imgDict[target1].value()', self.imgDict[target1].value())
-            print('imgDict[target2].value()', self.imgDict[target2].value())
+            print('target 1 value ', self.imgDict[target1].value())
+            print('target 2 value ', self.imgDict[target2].value())
             if self.imgDict[target1].value() == self.imgDict[target2].value():
         #     if self.targetList[0] == self.targetList[1]:
                 print('MATCH')
-                self.debug()
+                self.debug(target)
                 self.targetList.clear()
             #change img type to pokemon img
             # self.targetList[0].config(image = pokemon_img)
@@ -103,7 +105,7 @@ class MemoryTile(Tk):
                 print('NOT A MATCH')
                 print('targetlist[0]', self.targetList[0])
                 print('targetList[1]', self.targetList[1])
-                self.debug()
+                self.debug(target)
                 self.targetList.clear()
             #change img type to question mark
             #comparing class objects instead of strings 
@@ -112,32 +114,86 @@ class MemoryTile(Tk):
         
         if val == 'Img1':
             print('img1 was pressed')  
-            #change img type to pokemon img 
-            self.img1.config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 1:
+                    #change img type to pokemon img 
+                    self.img1.config(image = pokemon_img)
+                    break
+                elif keys == 9:
+                    self.img1Copy.config(image= pokemon_img)
+                    break
         if val == 'Img2':
             print('img2 was pressed')
-            self.img2.config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 2:
+                    #change img type to pokemon img 
+                    self.img2.config(image = pokemon_img)
+                    break
+                elif keys == 10:
+                    self.img2Copy.config(image= pokemon_img)
+                    break
 
         if val == 'Img3':
             print('img3 was pressed')
-            self.imgDict[target].value().config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 3:
+                    #change img type to pokemon img 
+                    self.img3.config(image = pokemon_img)
+                    break
+                elif keys == 11:
+                    self.img3Copy.config(image= pokemon_img)
+                    break
         if val == 'Img4':
             print('img4 was pressed')
-            self.img4.config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 4:
+                    #change img type to pokemon img 
+                    self.img4.config(image = pokemon_img)
+                    break
+                elif keys == 12:
+                    self.img4Copy.config(image= pokemon_img)
+                    break
         if val == 'Img5':
             print('img5 was pressed')
-            self.img5.config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 5:
+                    #change img type to pokemon img 
+                    self.img5.config(image = pokemon_img)
+                    break
+                elif keys == 13:
+                    self.img5Copy.config(image= pokemon_img)
+                    break
         if val == 'Img6':
             print('img6 was pressed')
-            self.img6.config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 6:
+                    #change img type to pokemon img 
+                    self.img6.config(image = pokemon_img)
+                    break
+                elif keys == 14:
+                    self.img6Copy.config(image= pokemon_img)
+                    break
         if val == 'Img7':
             print('img7 was pressed')
-            self.img7.config(image = pokemon_img)
+            for keys in self.dictList:
+                if keys == 7:
+                    #change img type to pokemon img 
+                    self.img7.config(image = pokemon_img)
+                    break
+                elif keys == 15:
+                    self.img7Copy.config(image= pokemon_img)
+                    break
         if val == 'Img8':
             print('img8 was pressed')
-            self.img8.config(image = pokemon_img)
-        if val == self.imgList[0]:
-            print('img')
+            for keys in self.dictList:
+                if keys == 8:
+                    #change img type to pokemon img 
+                    self.img8.config(image = pokemon_img)
+                    break
+                elif keys == 16:
+                    self.img8Copy.config(image= pokemon_img)
+                    break
+        
     def matchImg(self):
         pass
         #use the hash method 
@@ -147,9 +203,10 @@ class MemoryTile(Tk):
         #         self.numList.append(i)
 #match ids to imgs; if the two ids match, the imgs are the same
 
-    def debug(self):
+    def debug(self, target):
         print('self.numList ', self.numList)
         print('targetList: ', self.targetList)
+        print('what class obj number user pressed ',self.imgDict[target])
         # index = self.imgList.index()
 
 class Img1(Button):
