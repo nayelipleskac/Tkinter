@@ -69,43 +69,41 @@ class MemoryTile(Tk):
         for row in range(0,4,1):
             for column in range(0,4,1):
                 self.imgList[row*4+column].grid(row = row, column = column)
-                
+
     def clickHandler(self, target, val, pokemon_img, questionmark, id):
-        self.targetList.append(target)
+        self.targetList.append(id)
         if len(self.targetList) == 2:
             target1 = self.targetList[0]
             target2 = self.targetList[1]
-            # print('target 1 value ', self.imgDict[target1].value())
-            # print('target 2 value ', self.imgDict[target2].value())
             if self.imgDict[target1].value() == self.imgDict[target2].value():
         #     if self.targetList[0] == self.targetList[1]:
                 print('MATCH')
                 self.debug()
                 self.targetList.clear()
-            #change img type to pokemon img
-            # self.targetList[0].config(image = pokemon_img)
+                #change img type to pokemon img
+                # self.targetList[0].config(image = pokemon_img)
             else: 
+                #change img type to question mark
+                #comparing class objects instead of strings 
                 print('NOT A MATCH')
-                # print('targetlist[0]', self.targetList[0])
-                # print('targetList[1]', self.targetList[1])
-                
-            #change img type to question mark
-            #comparing class objects instead of strings 
-                if id == 1:
+                # target1.config(image = questionmark)
+                # target2.config(image = questionmark)
+                if target1 == 1 or target2 == 1:   
+                    print('in first if stm.')
                     self.img1.config(image = questionmark)
-                elif id == 2:
+                elif target1 == 2 or target2 == 2:
                     self.img2.config(image = questionmark) 
-                elif id == 3:
+                elif target1 == 3 or target2 == 3:
                     self.img3.config(image = questionmark)
-                elif id == 4:
+                elif target1 == 4 or target2:
                     self.img4.config(image = questionmark)
-                elif id == 5:
+                elif target1 == 5 or target2 == 5:
                     self.img5.config(image = questionmark)
-                elif id == 6:
+                elif target1 == 6 or target ==6:
                     self.img6.config(image = questionmark)
-                elif id == 7:
+                elif target1 == 7 or target2 == 7:
                     self.img7.config(image = questionmark)
-                elif id == 8:
+                elif target1 == 8 or target2 == 8:
                     self.img8.config(image = questionmark)
                 elif id == 9:
                     self.img1Copy.config(image = questionmark)
@@ -124,7 +122,7 @@ class MemoryTile(Tk):
                 elif id == 16:
                     self.img8Copy.config(image = questionmark)
                 root.update()
-                root.after(1000)
+                root.after(100)
                 self.debug()
                 self.targetList.clear()
                 # .config(image = questionmark)
