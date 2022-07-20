@@ -4,16 +4,16 @@ from tkinter import messagebox
 
 from tkinter import filedialog as fd
 from PIL import Image, ImageTk
-import random
+import random, time
 
-root = Tk()
-root.title('Memory Tile Project')
-
-root.geometry('500x500')
+# root = Tk()
 
 class MemoryTile(Tk):
     def __init__(self):
         Tk.__init__(self)
+        self.title('Memory Tile Project')
+        self.geometry('500x500')
+
         self.numList = []
         self.imgList = []
         self.targetList = []
@@ -34,9 +34,15 @@ class MemoryTile(Tk):
         self.img7Copy = Img7(self, 15)
         self.img8 = Img8(self, 8)
         self.img8Copy = Img8(self, 16)
+        self.quitButton = QuitGame(self)
+        # self.timeLabel = TimeLabel(self)
         self.imgDict = {1: self.img1, 2: self.img2, 3: self.img3, 4: self.img4, 5: self.img5, 6: self.img6, 7: self.img7, 8: self.img8, 9: self.img1Copy, 10: self.img2Copy, 11: self.img3Copy, 12: self.img4Copy, 13: self.img5Copy, 14: self.img6Copy, 15: self.img7Copy, 16: self.img8Copy}
+        self.matchedTiles = 0
         self.objTargetList = list(self.imgDict.values())    
         self.dictList = list(self.imgDict.keys())
+        #list stores obj name when button is pressed
+        self.objList = []
+
 
     def grid(self):
         self.imgList.append(self.img1)
@@ -70,107 +76,124 @@ class MemoryTile(Tk):
             for column in range(0,4,1):
                 self.imgList[row*4+column].grid(row = row, column = column)
 
+        self.quitButton.grid(row = 4, column = 0)
+
     def clickHandler(self, target, val, pokemon_img, questionmark, id):
         self.targetList.append(id)
-        if len(self.targetList) == 2:
+        #what button user has pressed
+        if id == 1:
+            self.objList.append(self.img1)
+            # self.img1.config(image = pokemon_img)
+            print('img has been flipped')
+            self.img1.flip()
+        elif id == 2:
+            self.objList.append(self.img2)
+            self.img2.config(image = pokemon_img) 
+        elif id == 3:
+            self.objList.append(self.img3)
+            self.img3.config(image = pokemon_img)
+        elif id == 4:
+            self.objList.append(self.img4)
+            self.img4.config(image = pokemon_img)
+        elif id == 5:
+            self.objList.append(self.img5)
+            self.img5.config(image = pokemon_img)
+        elif id == 6:
+            self.objList.append(self.img6)
+            self.img6.config(image = pokemon_img)
+        elif id == 7:
+            self.objList.append(self.img7)
+            self.img7.config(image = pokemon_img)
+        elif id == 8:
+            self.objList.append(self.img8)
+            self.img8.config(image = pokemon_img)
+        elif id == 9:
+            self.objList.append(self.img1Copy)
+            self.img1Copy.config(image = pokemon_img)
+        elif id == 10:
+            self.objList.append(self.img2Copy)
+            self.img2Copy.config(image = pokemon_img)
+        elif id == 11:
+            self.objList.append(self.img3Copy)
+            self.img3Copy.config(image = pokemon_img)
+        elif id == 12:
+            self.objList.append(self.img4Copy)
+            self.img4Copy.config(image = pokemon_img)
+        elif id == 13:
+            self.objList.append(self.img5Copy)
+            self.img5Copy.config(image = pokemon_img)
+        elif id == 14:
+            self.objList.append(self.img6Copy)
+            self.img6Copy.config(image = pokemon_img)
+        elif id == 15:
+            self.objList.append(self.img7Copy)
+            self.img7Copy.config(image = pokemon_img)
+        elif id == 16:
+            self.objList.append(self.img8Copy)
+            self.img8Copy.config(image = pokemon_img)
+        # time.sleep(1)
+
+        if len(self.targetList) == 2 and len(self.objList) == 2:
             target1 = self.targetList[0]
             target2 = self.targetList[1]
             if self.imgDict[target1].value() == self.imgDict[target2].value():
-        #     if self.targetList[0] == self.targetList[1]:
                 print('MATCH')
+                self.matchedTiles += 1
+                if self.matchedTiles == 8:
+                    messagebox.showinfo('showinfo', 'You have matched all tiles')
                 self.debug()
                 self.targetList.clear()
-                #change img type to pokemon img
-                # self.targetList[0].config(image = pokemon_img)
+                
             else: 
                 #change img type to question mark
-                #comparing class objects instead of strings 
                 print('NOT A MATCH')
-                # target1.config(image = questionmark)
-                # target2.config(image = questionmark)
-                if target1 == 1 or target2 == 1:   
-                    print('in first if stm.')
-                    self.img1.config(image = questionmark)
-                elif target1 == 2 or target2 == 2:
-                    self.img2.config(image = questionmark) 
-                elif target1 == 3 or target2 == 3:
-                    self.img3.config(image = questionmark)
-                elif target1 == 4 or target2:
-                    self.img4.config(image = questionmark)
-                elif target1 == 5 or target2 == 5:
-                    self.img5.config(image = questionmark)
-                elif target1 == 6 or target ==6:
-                    self.img6.config(image = questionmark)
-                elif target1 == 7 or target2 == 7:
-                    self.img7.config(image = questionmark)
-                elif target1 == 8 or target2 == 8:
-                    self.img8.config(image = questionmark)
-                elif id == 9:
-                    self.img1Copy.config(image = questionmark)
-                elif id == 10:
-                    self.img2Copy.config(image = questionmark)
-                elif id == 11:
-                    self.img3Copy.config(image = questionmark)
-                elif id == 12:
-                    self.img4Copy.config(image = questionmark)
-                elif id == 13:
-                    self.img5Copy.config(image = questionmark)
-                elif id == 14:
-                    self.img6Copy.config(image = questionmark)
-                elif id == 15:
-                    self.img7Copy.config(image = questionmark)
-                elif id == 16:
-                    self.img8Copy.config(image = questionmark)
-                root.update()
-                root.after(100)
+                # self.after(2000, compare)
+                # time.sleep(3)
                 self.debug()
+                self.objList[0].config(image = questionmark)
+                self.objList[1].config(image = questionmark)
+                
+                self.update()
                 self.targetList.clear()
-                # .config(image = questionmark)
-                # .config(image = questionmark)
+                self.objList.clear()
+    def compare(self):
+        target1 = self.targetList[0]
+        target2 = self.targetList[1]
+
+        if self.imgDict[target1].value() == self.imgDict[target2].value():
+            print('MATCH')
+            self.matchedTiles += 1
+            if self.matchedTiles == 8:
+                messagebox.showinfo('showinfo', 'You have matched all tiles')
+            self.debug()
+            self.targetList.clear()
+        else:
+            print('NOT A MATCH')
+
+        
+
+                
+                
 
         # for x in range(1,17,1):
         #     if id==x: 
         #         self.imgDict[id].config(image = pokemon_img)
 
-        if id == 1:
-            self.img1.config(image = pokemon_img)
-        elif id == 2:
-            self.img2.config(image = pokemon_img) 
-        elif id == 3:
-            self.img3.config(image = pokemon_img)
-        elif id == 4:
-            self.img4.config(image = pokemon_img)
-        elif id == 5:
-            self.img5.config(image = pokemon_img)
-        elif id == 6:
-            self.img6.config(image = pokemon_img)
-        elif id == 7:
-            self.img7.config(image = pokemon_img)
-        elif id == 8:
-            self.img8.config(image = pokemon_img)
-        elif id == 9:
-            self.img1Copy.config(image = pokemon_img)
-        elif id == 10:
-            self.img2Copy.config(image = pokemon_img)
-        elif id == 11:
-            self.img3Copy.config(image = pokemon_img)
-        elif id == 12:
-            self.img4Copy.config(image = pokemon_img)
-        elif id == 13:
-            self.img5Copy.config(image = pokemon_img)
-        elif id == 14:
-            self.img6Copy.config(image = pokemon_img)
-        elif id == 15:
-            self.img7Copy.config(image = pokemon_img)
-        elif id == 16:
-            self.img8Copy.config(image = pokemon_img)
+        
+    def run(self):
+        pass
+        #in __init__ self.run() 
+        # self.timeLabel.start()
                 
 
     def debug(self):
         print('self.numList ', self.numList)
         print('targetList: ', self.targetList)
+        print('objList: ', self.objList)
         # print('what class obj number user pressed ',self.imgDict[target])
         # index = self.imgList.index()
+
+#create a flip function for every class
 
 class Img1(Button):
     def __init__(self, master, id):
@@ -187,10 +210,19 @@ class Img1(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
         
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(1,'Img1', self.final_pokemon_img, self.final_question_img, self.id))
+        self.btn=Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(1,'Img1', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
+    def flip(self):
+        self.active, self.inactive = self.inactive, self.active
+        self.btn.config(image = self.inactive)
+        self.update()
+        #change image val 
+        #call flip() if two tiles are not match 
+        
 
 class Img2(Button):
     def __init__(self, master, id):
@@ -207,9 +239,13 @@ class Img2(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(2,'Img2', self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(2,'Img2', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
+    def flip(self):
+        self.active, self.inactive = self.inactive, self.active
 class Img3(Button):
     def __init__(self, master, id):
         self.g = master
@@ -319,10 +355,38 @@ class Img8(Button):
     def value(self):
         return self.n
 
+class QuitGame(Button):
+    def __init__(self, master):
+        self.g = master
+        Button.__init__(self, text = 'Quit Game', command = self.quit, width = 10, height = 2, font = 'bold')
+    def quit(self):
+        print('in self.quit')
+        self.quit()
+
+# class TimeLabel(Label):
+#     def __init__(self,master, time, sec):
+#         self.g = master
+#         self.time = time
+#         self.sec = 0
+#         self.min = sec //60
+#         self.hour = min // 60
+#         Label.__init__(self, text = 'Time Taken: {}'.format(self.hour))
+#     def start(self):
+#         start_time = time.time()
+#         while True:
+#             self.sec += 1
+#             if self.sec == 59:
+#                 self.min += 1
+
+
+
+# while True:
 
 
 if __name__ == '__main__':
     app = MemoryTile()
     app.grid()
+    # app.run()
+    app.mainloop()
     # app.matchImg()
-    root.mainloop()
+    # app.mainloop()
