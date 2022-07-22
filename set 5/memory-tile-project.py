@@ -134,33 +134,38 @@ class MemoryTile(Tk):
         # time.sleep(1)
 
         if len(self.targetList) == 2 and len(self.objList) == 2:
-            target1 = self.targetList[0]
-            target2 = self.targetList[1]
-            if self.imgDict[target1].value() == self.imgDict[target2].value():
-                print('MATCH')
-                self.matchedTiles += 1
-                if self.matchedTiles == 8:
-                    messagebox.showinfo('showinfo', 'You have matched all tiles')
-                self.debug()
-                self.targetList.clear()
+            self.after(3000, self.compare(questionmark))
+            # target1 = self.targetList[0]
+            # target2 = self.targetList[1]
+            # if self.imgDict[target1].value() == self.imgDict[target2].value():
+            #     print('MATCH')
+            #     self.matchedTiles += 1
+            #     if self.matchedTiles == 8:
+            #         messagebox.showinfo('showinfo', 'You have matched all tiles')
+            #     self.debug()
+            #     self.targetList.clear()
                 
-            else: 
-                #change img type to question mark
-                print('NOT A MATCH')
-                # self.after(2000, compare)
-                # time.sleep(3)
-                self.debug()
-                self.objList[0].config(image = questionmark)
-                self.objList[1].config(image = questionmark)
+            # else: 
+            #     #change img type to question mark
+            #     print('NOT A MATCH')
+            #     # self.after(2000, compare)
+            #     # time.sleep(3)
+            #     self.debug()
+            #     self.objList[0].config(image = questionmark)
+            #     self.objList[1].config(image = questionmark)
                 
-                self.update()
-                self.targetList.clear()
-                self.objList.clear()
-    def compare(self):
-        target1 = self.targetList[0]
-        target2 = self.targetList[1]
+            #     self.update()
+            #     self.targetList.clear()
+            #     self.objList.clear()
+    def compare(self, questionmark):
+        # target1 = self.targetList[0]
+        # target2 = self.targetList[1]
+        target1 = self.objList[0]
+        target2 = self.objList[1]
 
-        if self.imgDict[target1].value() == self.imgDict[target2].value():
+        # if self.imgDict[target1].value() == self.imgDict[target2].value():
+        if target1.value() == target2.value():
+
             print('MATCH')
             self.matchedTiles += 1
             if self.matchedTiles == 8:
@@ -168,12 +173,16 @@ class MemoryTile(Tk):
             self.debug()
             self.targetList.clear()
         else:
-            print('NOT A MATCH')
+            self.after(3000,self.notAMatch(target1, target2, questionmark))
+            
+    def notAMatch(self, target1, target2, questionmark):
+        target1.config(image = questionmark)
+        target2.config(image = questionmark)
+        print('NOT A MATCH')
+        self.update()
+        self.targetList.clear()
+        self.objList.clear()
 
-        
-
-                
-                
 
         # for x in range(1,17,1):
         #     if id==x: 
@@ -213,15 +222,15 @@ class Img1(Button):
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
         
-        self.btn=Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(1,'Img1', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(1,'Img1', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
         self.active, self.inactive = self.inactive, self.active
-        self.btn.config(image = self.inactive)
+        # self.btn.config(image = self.inactive)
         self.update()
         #change image val 
-        #call flip() if two tiles are not match 
+        #call flip() if two tiles are not matched 
         
 
 class Img2(Button):
@@ -261,7 +270,9 @@ class Img3(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(3,'Img3', self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(3,'Img3', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
 class Img4(Button):
@@ -279,7 +290,9 @@ class Img4(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(4,'Img4', self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(4,'Img4', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
 class Img5(Button):
@@ -297,7 +310,9 @@ class Img5(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(5,'Img5', self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(5,'Img5', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
 class Img6(Button):
@@ -315,7 +330,9 @@ class Img6(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(6,'Img6', self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(6,'Img6', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
 class Img7(Button):
@@ -333,7 +350,9 @@ class Img7(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(7,'Img7', self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(7,'Img7', self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
 class Img8(Button):
@@ -351,7 +370,9 @@ class Img8(Button):
         self.column_val = 0
         self.is_clicked = 0
         self.id = id
-        Button.__init__(self, image = self.final_question_img, command = lambda: self.g.clickHandler(8,'Img8',self.final_pokemon_img, self.final_question_img, self.id))
+        self.active = self.final_question_img
+        self.inactive = self.final_pokemon_img
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(8,'Img8',self.final_pokemon_img, self.final_question_img, self.id))
     def value(self):
         return self.n
 
