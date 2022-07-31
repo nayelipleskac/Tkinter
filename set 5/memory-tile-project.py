@@ -70,9 +70,6 @@ class MemoryTile(Tk):
         random.shuffle(self.numList)
         random.shuffle(self.imgList)
 
-        # for key, val in enumerate(self.imgList):
-        #     self.imgDict[key] = val
-
         for row in range(0,4,1):
             for column in range(0,4,1):
                 self.imgList[row*4+column].grid(row = row, column = column)
@@ -415,25 +412,43 @@ class QuitGame(Button):
         print('in self.quit')
         self.quit()
 
-class TimeLabel(Button):
-    def __init__(self,master, time, sec):
+class TimeLabel(Label):
+    def __init__(self,master):
         self.g = master
-        self.running = False
-        self.time = time
+        self.run = False
         self.counter = -1
-        self.min = sec //60
-        self.hour = min // 60
-        Button.__init__(self, text = 'Time Taken: {}'.format(self.hour), command = self.start)
+        self.sec = 0
+        self.min = 0
+        self.hours = 0
+        Label.__init__(self, text = '00:00:00', font = 'Arial')
     def start(self):
-        self.running = True
-        start_time = time.time()
-        while True:
-            if self.counter == -1:
-                self.config(text = '00')
-            else:
-                self.config(text=str(self.counter))
+        self.run = True
+        # start_time = time.time()
+        if not self.run:
+            self.update()
+            self.run = True
+        # if self.run:
+        #     if self.counter == -1:
+
+        #         self.config(text = 'starting...')
+        #     else:
+        #         self.config(text=str(self.counter))
             self.counter += 1
             # if self.sec == 
+    # def pause(self):
+    #     if self.run:
+    #         self.after_cancel    
+    def stop(self):
+        pass
+    def update(self):
+        self.sec += 1 
+        if self.sec ==60:
+            self.min +=1
+            self.seconds = 0
+        if self.min == 60:
+            self.hours += 1
+            self.min = 0
+
 
 
 
