@@ -12,7 +12,7 @@ class MemoryTile(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title('Memory Tile Project')
-        self.geometry('500x500')
+        self.geometry('550x550')
 
         self.numList = []
         self.imgList = []
@@ -75,128 +75,109 @@ class MemoryTile(Tk):
                 self.imgList[row*4+column].grid(row = row, column = column)
 
         self.quitButton.grid(row = 4, column = 0)
+        self.timeLabel.grid(row =5, column = 0)
 
-    def clickHandler(self, target, val, pokemon_img, questionmark, id):
+    def clickHandler(self, questionmark, id):
         self.targetList.append(id)
         #what button user has pressed
         if id == 1:
             self.objList.append(self.img1)
             self.img1.flip()
-            # self.img1.config(image = pokemon_img)
             
         elif id == 2:
             self.objList.append(self.img2)
-            # self.img2.config(image = pokemon_img) 
             self.img2.flip()
 
         elif id == 3:
             self.objList.append(self.img3)
-            # self.img3.config(image = pokemon_img)
             self.img3.flip()
         elif id == 4:
             self.objList.append(self.img4)
-            # self.img4.config(image = pokemon_img)
             self.img4.flip()
         elif id == 5:
             self.objList.append(self.img5)
-            # self.img5.config(image = pokemon_img)
             self.img5.flip()
         elif id == 6:
             self.objList.append(self.img6)
-            # self.img6.config(image = pokemon_img)
             self.img6.flip()
         elif id == 7:
             self.objList.append(self.img7)
-            # self.img7.config(image = pokemon_img)
             self.img7.flip()
         elif id == 8:
             self.objList.append(self.img8)
-            # self.img8.config(image = pokemon_img)
             self.img8.flip()
         elif id == 9:
             self.objList.append(self.img1Copy)
-            # self.img1Copy.config(image = pokemon_img)
             self.img1Copy.flip()
         elif id == 10:
             self.objList.append(self.img2Copy)
-            # self.img2Copy.config(image = pokemon_img)
             self.img2Copy.flip()
         elif id == 11:
             self.objList.append(self.img3Copy)
-            # self.img3Copy.config(image = pokemon_img)
             self.img3Copy.flip()
         elif id == 12:
             self.objList.append(self.img4Copy)
-            # self.img4Copy.config(image = pokemon_img)
             self.img4Copy.flip()
         elif id == 13:
             self.objList.append(self.img5Copy)
-            # self.img5Copy.config(image = pokemon_img)
             self.img5Copy.flip()
         elif id == 14:
             self.objList.append(self.img6Copy)
-            # self.img6Copy.config(image = pokemon_img)
             self.img6Copy.flip()
         elif id == 15:
             self.objList.append(self.img7Copy)
-            # self.img7Copy.config(image = pokemon_img)
             self.img7Copy.flip()
         elif id == 16:
             self.objList.append(self.img8Copy)
-            # self.img8Copy.config(image = pokemon_img)
             self.img8Copy.flip()
-        # time.sleep(1)
 
         if len(self.objList) == 2:
-            print('length of objList ==2')
-            self.after(3000, self.compare(questionmark))
+            # print('length of objList ==2')
+            self.after(3000, self.compare())
        
-    def compare(self, questionmark):
+    def compare(self):
         target1 = self.objList[0]
         target2 = self.objList[1]
 
+        if target1.id == target2.id:
+            messagebox.showinfo('showinfo', 'Pick 2 different tiles')
+            self.matchedTiles -=1
+
         # if self.imgDict[target1].value() == self.imgDict[target2].value():
         if target1.value() == target2.value():
+
             print('MATCH')
             self.matchedTiles += 1
             if self.matchedTiles == 8:
                 messagebox.showinfo('showinfo', 'You have matched all tiles')
-            self.debug()
+                self.timeLabel.stop()
+
             self.objList.clear()
             self.targetList.clear()
         else:
-            # self.after(3000,self.notAMatch(target1, target2, questionmark))
             print('not a match...flipping targets')
             time.sleep(2)
             target1.flip()
             target2.flip()
             
-            # target1.config(image = questionmark)
-            # target2.config(image = questionmark)
             print('NOT A MATCH')
             self.update()
             self.targetList.clear()
             self.objList.clear()
+
+        self.debug()
         
     def run(self):
         self.layout()
-        #in __init__ self.run() 
         self.timeLabel.start()
                 
 
     def debug(self):
-        print('self.numList ', self.numList)
-        print('targetList: ', self.targetList)
+        # print('self.numList ', self.numList)
+        # print('targetList: ', self.targetList)
         print('objList: ', self.objList)
-        # print('what class obj number user pressed ',self.imgDict[target])
-        # index = self.imgList.index()
+        print('matchedTiles ', self.matchedTiles)
 
-#explain overriding v overloading 
-#inheritance 
-#poloymorphism 
-#inheritance
-#encapsulation 
-#abstraction 
 
 class Img1(Button):
     def __init__(self, master, id):
@@ -216,7 +197,7 @@ class Img1(Button):
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
         
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(1,'Img1', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -243,7 +224,7 @@ class Img2(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(2,'Img2', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -269,7 +250,7 @@ class Img3(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(3,'Img3', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -295,7 +276,7 @@ class Img4(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(4,'Img4', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -320,7 +301,7 @@ class Img5(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(5,'Img5', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -345,7 +326,7 @@ class Img6(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(6,'Img6', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -370,7 +351,7 @@ class Img7(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(7,'Img7', self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -395,7 +376,7 @@ class Img8(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(8,'Img8',self.final_pokemon_img, self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -420,45 +401,38 @@ class TimeLabel(Label):
         self.sec = 0
         self.min = 0
         self.hours = 0
-        Label.__init__(self, text = '00:00:00', font = 'Arial')
+        Label.__init__(self, text = '00:00:00', font = ('Arial', 30))
     def start(self):
+        print('timer is starting')
         self.run = True
-        # start_time = time.time()
-        if not self.run:
-            self.update()
-            self.run = True
-        # if self.run:
-        #     if self.counter == -1:
-
-        #         self.config(text = 'starting...')
-        #     else:
-        #         self.config(text=str(self.counter))
+        if self.run:
+            self.update_time()
+            self.run = True            
             self.counter += 1
-            # if self.sec == 
-    # def pause(self):
-    #     if self.run:
-    #         self.after_cancel    
+        
     def stop(self):
-        pass
-    def update(self):
-        self.sec += 1 
+        self.run = False
+        self.update()
+
+    def update_time(self):
+        # print('timer is updating')
+        if self.run:
+            self.sec += 1 
         if self.sec ==60:
             self.min +=1
-            self.seconds = 0
+            self.sec = 0
         if self.min == 60:
             self.hours += 1
             self.min = 0
+        
+        hours_string = f'{self.hours}' if self.hours >9 else f'0{self.hours}'
+        minutes_string = f'{self.min}' if self.min > 9 else f'0{self.min}'
+        seconds_string = f'{self.sec}' if self.sec >9 else f'0{self.sec}'
 
-
-
-
-# while True:
-
+        self.config(text = hours_string + ':' + minutes_string + ':' + seconds_string)
+        self.after(1000, self.update_time)
 
 if __name__ == '__main__':
     app = MemoryTile()
-    # app.layout()
-    # app.run()
     app.mainloop()
-    # app.matchImg()
-    # app.mainloop()
+
