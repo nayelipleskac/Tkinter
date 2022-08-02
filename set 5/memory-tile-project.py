@@ -77,7 +77,7 @@ class MemoryTile(Tk):
         self.quitButton.grid(row = 4, column = 0)
         self.timeLabel.grid(row =5, column = 0)
 
-    def clickHandler(self, questionmark, id):
+    def clickHandler(self, id):
         self.targetList.append(id)
         #what button user has pressed
         if id == 1:
@@ -143,10 +143,7 @@ class MemoryTile(Tk):
             messagebox.showinfo('showinfo', 'Pick 2 different tiles')
             self.matchedTiles -=1
 
-        # if self.imgDict[target1].value() == self.imgDict[target2].value():
         if target1.value() == target2.value():
-
-            print('MATCH')
             self.matchedTiles += 1
             if self.matchedTiles == 8:
                 messagebox.showinfo('showinfo', 'You have matched all tiles')
@@ -160,7 +157,6 @@ class MemoryTile(Tk):
             target1.flip()
             target2.flip()
             
-            print('NOT A MATCH')
             self.update()
             self.targetList.clear()
             self.objList.clear()
@@ -197,7 +193,7 @@ class Img1(Button):
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
         
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -224,7 +220,7 @@ class Img2(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -250,7 +246,7 @@ class Img3(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -276,7 +272,7 @@ class Img4(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -301,7 +297,7 @@ class Img5(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -326,7 +322,7 @@ class Img6(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -351,7 +347,7 @@ class Img7(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -376,7 +372,7 @@ class Img8(Button):
         self.id = id
         self.active = self.final_question_img
         self.inactive = self.final_pokemon_img
-        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.final_question_img, self.id))
+        Button.__init__(self, image = self.active, command = lambda: self.g.clickHandler(self.id))
     def value(self):
         return self.n
     def flip(self):
@@ -389,9 +385,6 @@ class QuitGame(Button):
     def __init__(self, master):
         self.g = master
         Button.__init__(self, text = 'Quit Game', command = self.quit, width = 10, height = 2, font = 'bold')
-    def quit(self):
-        print('in self.quit')
-        self.quit()
 
 class TimeLabel(Label):
     def __init__(self,master):
