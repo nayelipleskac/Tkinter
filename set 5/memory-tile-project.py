@@ -200,7 +200,7 @@ class Img1(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 1 is called')
+        # print('flip function 1 is called')
                  
 
 class Img2(Button):
@@ -227,7 +227,7 @@ class Img2(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 2 is called')
+        # print('flip function 2 is called')
 
 class Img3(Button):
     def __init__(self, master, id):
@@ -254,7 +254,7 @@ class Img3(Button):
         self.config(image = self.active)
 
         self.update()
-        print('flip function 3 is called')
+        # print('flip function 3 is called')
 class Img4(Button):
     def __init__(self, master, id):
         self.g = master
@@ -279,7 +279,7 @@ class Img4(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 4 is called')
+        # print('flip function 4 is called')
 class Img5(Button):
     def __init__(self, master, id):
         self.g = master
@@ -304,7 +304,7 @@ class Img5(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 5 is called')
+        # print('flip function 5 is called')
 class Img6(Button):
     def __init__(self, master, id):
         self.g = master
@@ -329,7 +329,7 @@ class Img6(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 6 is called')
+        # print('flip function 6 is called')
 class Img7(Button):
     def __init__(self, master, id):
         self.g = master
@@ -354,7 +354,7 @@ class Img7(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 7 is called')
+        # print('flip function 7 is called')
 class Img8(Button):
     def __init__(self, master, id):
         self.g = master
@@ -379,7 +379,7 @@ class Img8(Button):
         self.active, self.inactive = self.inactive, self.active
         self.config(image = self.active)
         self.update()
-        print('flip function 8 is called')
+        # print('flip function 8 is called')
 
 class QuitGame(Button):
     def __init__(self, master):
@@ -428,4 +428,3 @@ class TimeLabel(Label):
 if __name__ == '__main__':
     app = MemoryTile()
     app.mainloop()
-
