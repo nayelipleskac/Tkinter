@@ -14,13 +14,17 @@ class Search:
         info = wikipedia.summary(user_info, sentences = 1)
         return info
 
-class UI(Search):
+class UI(Tk):
     def __init__(self):
-        self.s = search
+        Tk.__init__(self)
+        # self.s = search
         self.search_label = Label(root, text = 'Search')
         self.entryBox = Entry(root)
         self.submit_bttn = Button(root, text = 'Submit', command = self.submit)
         self.textbox = Text(root, width = 35, height = 20)
+        self.search = Search()
+
+
     def grid(self):
         self.search_label.grid(row = 0, column = 0)
         self.entryBox.grid(row = 0, column = 1)
@@ -31,10 +35,9 @@ class UI(Search):
         user_info = self.entryBox.get()
         # info = wikipedia.summary(user_info, sentences = 1)
         # self.s.search_info(user_info)
-       
-        self.textbox.insert(END, self.search_info(user_info))
+        self.textbox.insert(END, self.search.search_info(user_info))
 
-search = Search()
+# search = Search()
 
 app = UI()
 app.grid()
